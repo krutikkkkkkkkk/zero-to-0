@@ -3,6 +3,9 @@ import type { ReactNode } from "react";
 
 /** The free AI course page */
 export const COURSE_HREF = "/zerotoinfinity";
+export const REPO_URL = "https://github.com/krutikkkkkkkkk/zero-to-0";
+export const SPONSOR_URL = "https://github.com/sponsors/krutikkkkkkkkk";
+export const TWITTER_URL = "https://x.com/krutikkkkkkkkk";
 
 /** Join class names, skipping falsy values. */
 export const cx = (...parts: (string | false | null | undefined)[]) => parts.filter(Boolean).join(" ");

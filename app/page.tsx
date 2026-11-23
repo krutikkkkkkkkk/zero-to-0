@@ -1,4 +1,5 @@
-import { Closing, Faq, Manifesto, Money, SiteFooter } from "@/components/closing-sections";
+import { Closing, Faq, Manifesto, Money } from "@/components/closing-sections";
+import { SiteFooter } from "@/components/site-footer";
 import { Hero } from "@/components/hero";
 import { LearnModules } from "@/components/learn-modules";
 import { ResourceDirectory } from "@/components/resource-directory";

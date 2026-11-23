@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight, Check } from "lucide-react";
 import { faqs } from "@/lib/content";
-import { Brand, COURSE_HREF, Eyebrow, buttonBase, buttonSize, cx, receiptDash } from "./ui";
+import { COURSE_HREF, Eyebrow, buttonBase, buttonSize, cx, receiptDash } from "./ui";
 
 const perks = [
   "Five learning themes, from tools to building",
@@ -146,31 +146,5 @@ export function Closing() {
       </Link>
       <small className="mt-[15px] block text-[9px] text-muted">No course fee. Effort, tragically, still required.</small>
     </section>
-  );
-}
-
-export function SiteFooter() {
-  const meta = "text-[9px] text-muted";
-  return (
-    <footer className="wrap flex justify-between gap-[30px] border-t border-line pt-8 pb-[45px] max-md:flex-col max-md:gap-2 max-md:pb-[55px]">
-      <div>
-        <Brand size="text-[21px]" />
-        <p className={cx("my-3 leading-[1.8]", meta)}>Independent parody. Useful links. No affiliation.</p>
-      </div>
-      <div className="text-right max-md:text-left">
-        <p className={cx("my-3 leading-[1.8]", meta)}>
-          Not affiliated with Zero to Infinity with AI, its instructors,
-          <br />
-          or the creators linked here. Satire is not an allegation of misconduct.
-        </p>
-        <a href="#resources" className={cx("border-b border-[#b9b0a5]", meta)}>
-          Creator credits
-        </a>
-        <span className={meta}> · </span>
-        <a href="#faq" className={cx("border-b border-[#b9b0a5]", meta)}>
-          Access &amp; privacy
-        </a>
-      </div>
-    </footer>
   );
 }

@@ -108,6 +108,8 @@
 
 /* Pages wrapped in .theme-auto (the free course) follow the device's dark mode by
    swapping the colour tokens; the home page keeps its light-only design. */
+/* Browsers are told which pages may go dark via <meta name="color-scheme"> (see the
+   `viewport` exports in app/layout.tsx and app/zerotoinfinity/page.tsx). */
 @media (prefers-color-scheme: dark) {
   :root:has(.theme-auto) {
     color-scheme: dark;

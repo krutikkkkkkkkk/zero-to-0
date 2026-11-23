@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Check } from "lucide-react";
+import { BrandLogo, type LogoKey, logos } from "./brand-logo";
 import { COURSE_HREF, buttonBase, buttonSize, cx, receiptDash, textLink } from "./ui";
 
 const receiptRows: [string, string][] = [
@@ -9,13 +10,13 @@ const receiptRows: [string, string][] = [
   ["Fear of missing out", "Removed"],
 ];
 
-const tools = [
-  ["✳", "ChatGPT"],
-  ["✦", "Gemini"],
-  ["✴", "Claude"],
-  ["⌁", "n8n"],
-  ["▤", "NotebookLM"],
-  ["〰", "Wispr Flow"],
+const tools: [LogoKey, string][] = [
+  ["openai", "ChatGPT"],
+  ["gemini", "Gemini"],
+  ["claude", "Claude"],
+  ["n8n", "n8n"],
+  ["google", "NotebookLM"],
+  ["wisprflow", "Wispr Flow"],
 ];
 
 export function Hero() {
@@ -123,9 +124,9 @@ export function Hero() {
             SAME TOOLS.
             <br className="max-md:hidden" /> NO COURSE TOLL.
           </span>
-          {tools.map(([symbol, name]) => (
+          {tools.map(([logo, name]) => (
             <span key={name} className="flex items-center gap-2 text-[16px] font-bold whitespace-nowrap max-xl:text-[13px]">
-              <span className="text-[24px] font-normal">{symbol}</span>
+              <BrandLogo logo={logos[logo]} size={22} />
               {name}
             </span>
           ))}

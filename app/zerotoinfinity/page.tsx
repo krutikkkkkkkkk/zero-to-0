@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { FreeCourse } from "@/components/course/free-course";
 import { Brand } from "@/components/ui";
-import { courseModules, totalLessons } from "@/lib/course";
+import { SiteFooter } from "@/components/site-footer";
+import { courseModules, reviewedOn, totalLessons } from "@/lib/course";
 
 export const metadata: Metadata = {
   title: "The free AI course — Zero to ₹0",
@@ -10,6 +11,11 @@ export const metadata: Metadata = {
     title: "The free AI course",
     description: `Everything a paid AI course teaches, from free lessons, in ${courseModules.length} ordered modules.`,
   },
+};
+
+// This page has a real dark mode (see `.theme-auto` in globals.css), so tell the browser.
+export const viewport: Viewport = {
+  colorScheme: "light dark",
 };
 
 export default function FreeCoursePage() {
@@ -25,6 +31,7 @@ export default function FreeCoursePage() {
       <main id="top">
         <FreeCourse />
       </main>
+      <SiteFooter note={`Lesson links last reviewed ${reviewedOn}.`} />
     </div>
   );
 }

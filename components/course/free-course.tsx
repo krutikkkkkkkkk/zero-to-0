@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Check, RotateCcw } from "lucide-react";
 import {
   type Lesson,
@@ -9,10 +8,10 @@ import {
   allLessonIds,
   courseModules,
   lessonTypes,
-  reviewedOn,
   starterLessons,
   totalLessons,
 } from "@/lib/course";
+import { BrandLogo, logoForPublisher } from "../brand-logo";
 import { Eyebrow, cx } from "../ui";
 import { useCourseProgress } from "./progress-store";
 
@@ -205,26 +204,13 @@ export function FreeCourse() {
           );
         })}
       </div>
-
-      <footer className="wrap flex justify-between gap-8 py-10 text-[12px] leading-[1.8] text-muted max-md:flex-col max-md:gap-3">
-        <p className="m-0 max-w-[560px]">
-          Every lesson belongs to its publisher and opens on their site. This page only chooses and orders them. Naming
-          a publisher doesn&apos;t mean they endorse this course. Not affiliated with Zero to Infinity with AI.
-        </p>
-        <p className="m-0 text-right max-md:text-left">
-          Links last reviewed {reviewedOn}.
-          <br />
-          <Link href="/" className="border-b border-line text-ink">
-            Zero to ₹0 home
-          </Link>
-        </p>
-      </footer>
     </>
   );
 }
 
 function LessonRow({ lesson, done, onToggle }: { lesson: Lesson; done: boolean; onToggle: () => void }) {
   const checkboxId = `done-${lesson.id}`;
+  const logo = logoForPublisher(lesson.publisher);
   return (
     <li className="flex gap-4 border-b border-line py-5 max-md:gap-3">
       <input
@@ -256,8 +242,9 @@ function LessonRow({ lesson, done, onToggle }: { lesson: Lesson; done: boolean; 
           )}
         </div>
         <p className="mt-1.5 mb-0 text-[14px] leading-[1.6] text-muted">{lesson.description}</p>
-        <p className="mt-2 mb-0 text-[12px] text-muted">
-          {[lesson.publisher, lesson.type, lesson.duration].filter(Boolean).join(" · ")}
+        <p className="mt-2 mb-0 flex items-center gap-1.5 text-[12px] text-muted">
+          {logo && <BrandLogo logo={logo} size={15} />}
+          <span>{[lesson.publisher, lesson.type, lesson.duration].filter(Boolean).join(" · ")}</span>
         </p>
       </div>
     </li>

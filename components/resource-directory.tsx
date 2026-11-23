@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ArrowUpRight, Search, ShieldCheck, X } from "lucide-react";
 import { type CategoryFilter, categories, channelUrl, channels } from "@/lib/content";
+import { BrandLogo, logos } from "./brand-logo";
 import { Eyebrow, buttonBase, buttonSize, cx } from "./ui";
 
 export function ResourceDirectory() {
@@ -84,7 +85,7 @@ export function ResourceDirectory() {
                   className="flex size-[43px] items-center justify-center rounded-full font-serif text-[20px] tracking-[-1px]"
                   style={{ background: c.color }}
                 >
-                  {c.initials}
+                  {c.logo ? <BrandLogo logo={logos[c.logo]} size={22} /> : c.initials}
                 </span>
                 <span className="rounded-[20px] border border-line px-2 py-[3px] text-[8px] text-muted max-md:text-[7px]">
                   {c.level}

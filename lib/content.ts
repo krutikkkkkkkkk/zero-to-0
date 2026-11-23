@@ -1,5 +1,7 @@
 export type Category = "Everyday AI" | "Official channels" | "Automation" | "Build & code" | "Hindi";
 
+import type { LogoKey } from "@/components/brand-logo";
+
 export type Channel = {
   name: string;
   handle: string;
@@ -11,6 +13,8 @@ export type Channel = {
   topics: string;
   /** Query used for the per-module "Learn from" links */
   search: string;
+  /** Company logo shown instead of initials (individual creators keep initials) */
+  logo?: LogoKey;
 };
 
 export type LearningModule = {
@@ -28,13 +32,13 @@ export type CategoryFilter = (typeof categories)[number];
 export const channels: Channel[] = [
   { name: "Kevin Stratvert", handle: "KevinStratvert", category: "Everyday AI", level: "Beginner", initials: "KS", color: "#d9e8e0", description: "Friendly, step-by-step tutorials for AI tools, Excel, and getting actual work done.", topics: "ChatGPT · Gemini · NotebookLM", search: "ChatGPT beginner tutorial" },
   { name: "Jeff Su", handle: "JeffSu", category: "Everyday AI", level: "Beginner", initials: "JS", color: "#eee2d6", description: "Practical prompting and work routines. Less AI theatre, more useful output.", topics: "Prompting · Claude · Productivity", search: "AI prompting" },
-  { name: "OpenAI", handle: "OpenAI", category: "Official channels", level: "All levels", initials: "O", color: "#d9e8e0", description: "Product demonstrations and developer sessions, straight from the source.", topics: "ChatGPT · Tools · Developer sessions", search: "ChatGPT" },
-  { name: "Anthropic", handle: "anthropic-ai", category: "Official channels", level: "All levels", initials: "A", color: "#edd5c6", description: "Official Claude explanations, demonstrations, and deeper research discussions.", topics: "Claude · Artifacts · Claude Code", search: "Claude" },
-  { name: "Google Workspace", handle: "googleworkspace", category: "Official channels", level: "Beginner", initials: "G", color: "#e1e7f2", description: "Gemini in everyday work apps. Check plan requirements before following along.", topics: "Gemini · Docs · Sheets · Gmail", search: "Gemini" },
-  { name: "Google for Developers", handle: "GoogleDevelopers", category: "Build & code", level: "Technical", initials: "G", color: "#e1e7f2", description: "Build with Gemini, Google AI Studio, and APIs. Some coding required.", topics: "Gemini API · AI Studio · Web", search: "Gemini API" },
-  { name: "n8n", handle: "n8n-io", category: "Automation", level: "Beginner → Advanced", initials: "n8n", color: "#f0dadd", description: "Triggers, actions, and workflows from the people who make the platform.", topics: "Workflows · Error handling · Agents", search: "beginner" },
+  { name: "OpenAI", handle: "OpenAI", logo: "openai", category: "Official channels", level: "All levels", initials: "O", color: "#d9e8e0", description: "Product demonstrations and developer sessions, straight from the source.", topics: "ChatGPT · Tools · Developer sessions", search: "ChatGPT" },
+  { name: "Anthropic", handle: "anthropic-ai", logo: "anthropic", category: "Official channels", level: "All levels", initials: "A", color: "#edd5c6", description: "Official Claude explanations, demonstrations, and deeper research discussions.", topics: "Claude · Artifacts · Claude Code", search: "Claude" },
+  { name: "Google Workspace", handle: "googleworkspace", logo: "google", category: "Official channels", level: "Beginner", initials: "G", color: "#e1e7f2", description: "Gemini in everyday work apps. Check plan requirements before following along.", topics: "Gemini · Docs · Sheets · Gmail", search: "Gemini" },
+  { name: "Google for Developers", handle: "GoogleDevelopers", logo: "google", category: "Build & code", level: "Technical", initials: "G", color: "#e1e7f2", description: "Build with Gemini, Google AI Studio, and APIs. Some coding required.", topics: "Gemini API · AI Studio · Web", search: "Gemini API" },
+  { name: "n8n", handle: "n8n-io", logo: "n8n", category: "Automation", level: "Beginner → Advanced", initials: "n8n", color: "#f0dadd", description: "Triggers, actions, and workflows from the people who make the platform.", topics: "Workflows · Error handling · Agents", search: "beginner" },
   { name: "Nate Herk", handle: "nateherk", category: "Automation", level: "Intermediate", initials: "NH", color: "#e7e3d3", description: "Hands-on AI automation builds. Public tutorials; optional paid offers are separate.", topics: "n8n · AI agents · Automation", search: "n8n beginner" },
-  { name: "freeCodeCamp.org", handle: "freecodecamp", category: "Build & code", level: "Beginner → Advanced", initials: "fC", color: "#dfe1ed", description: "Long-form, free technical courses. Pick a course that matches your prerequisites.", topics: "Web development · Python · AI/ML", search: "Generative AI" },
+  { name: "freeCodeCamp.org", handle: "freecodecamp", logo: "freecodecamp", category: "Build & code", level: "Beginner → Advanced", initials: "fC", color: "#dfe1ed", description: "Long-form, free technical courses. Pick a course that matches your prerequisites.", topics: "Web development · Python · AI/ML", search: "Generative AI" },
   { name: "Microsoft Developer", handle: "MicrosoftDeveloper", category: "Build & code", level: "Technical", initials: "M", color: "#e1e7f2", description: "Technical explanations and AI application building with developer tooling.", topics: "AI apps · Python · Agents", search: "AI agents" },
   { name: "Chai aur Code", handle: "chaiaurcode", category: "Hindi", level: "Beginner → Advanced", initials: "C", color: "#ecdcc8", description: "Hindi coding explanations. Understand what is behind the website you are building.", topics: "Hindi · JavaScript · Web development", search: "JavaScript" },
   { name: "codebasics Hindi", handle: "codebasicsHindi", category: "Hindi", level: "Beginner", initials: "cb", color: "#dce8e0", description: "Step-by-step Hindi programming foundations and technical learning.", topics: "Hindi · Python · Data analysis", search: "Python" },
