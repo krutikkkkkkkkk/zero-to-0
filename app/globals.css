@@ -106,6 +106,18 @@
   }
 }
 
+/* Pages wrapped in .theme-auto (the free course) follow the device's dark mode by
+   swapping the colour tokens; the home page keeps its light-only design. */
+@media (prefers-color-scheme: dark) {
+  :root:has(.theme-auto) {
+    color-scheme: dark;
+    --color-paper: #16140f;
+    --color-ink: #f3eee4;
+    --color-muted: #a8a094;
+    --color-line: #332e26;
+  }
+}
+
 /* Layout container: 1120px max, 40px gutters (20px on phones) */
 @utility wrap {
   max-width: 1120px;
