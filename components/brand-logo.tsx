@@ -13,8 +13,11 @@ import {
   siHuggingface,
   siMdnwebdocs,
   siN8n,
+  siNextdotjs,
   siShadcnui,
   siStackoverflow,
+  siV0,
+  siVercel,
   siX,
   siYoutube,
 } from "simple-icons";
@@ -52,6 +55,11 @@ export const logos = {
   shadcn: icon(siShadcnui),
   x: icon(siX),
   githubSponsors: icon(siGithubsponsors),
+  v0: icon(siV0),
+  vercel: icon(siVercel),
+  nextjs: icon(siNextdotjs),
+  lovable: image("/logos/lovable.svg", "Lovable"),
+  bolt: image("/logos/bolt.png", "Bolt"),
 } satisfies Record<string, Logo>;
 
 export type LogoKey = keyof typeof logos;
@@ -78,6 +86,11 @@ export function logoForPublisher(publisher: string): Logo | undefined {
   if (p.startsWith("framer")) return logos.framer;
   if (p.startsWith("mobbin")) return logos.mobbin;
   if (p.startsWith("shadcn")) return logos.shadcn;
+  if (p.startsWith("vercel")) return logos.vercel;
+  if (p.startsWith("next.js")) return logos.nextjs;
+  if (p.startsWith("v0")) return logos.v0;
+  if (p.startsWith("lovable")) return logos.lovable;
+  if (p.startsWith("bolt")) return logos.bolt;
   return undefined;
 }
 

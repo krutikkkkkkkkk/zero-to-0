@@ -94,6 +94,9 @@ const goalLessons: Record<GoalId, { core: string[]; extra: string[] }> = {
       "figma-get-started-ai",
       "shadcn-registry",
       "shadcn-mcp-server",
+      "v0-build-with-v0",
+      "lovable-welcome",
+      "vercel-deploy-foundations",
     ],
   },
   understand: {

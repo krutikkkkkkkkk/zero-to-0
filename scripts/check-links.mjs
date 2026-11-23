@@ -14,6 +14,7 @@ import { writeFileSync } from "node:fs";
 import { courseModules } from "../lib/course.ts";
 import { channels, channelUrl } from "../lib/content.ts";
 import { allRepos, imageTools, websiteTools } from "../lib/resources.ts";
+import { builders, vercelResources } from "../lib/builders.ts";
 
 const TIMEOUT_MS = 25_000;
 const CONCURRENCY = 6;
@@ -30,6 +31,10 @@ const links = [
   ...channels.map((c) => ({ id: `home:${c.handle}`, title: c.name, where: "Home page: free channels", url: channelUrl(c) })),
   ...allRepos.map((r) => ({ id: `repo:${r.repo}`, title: r.title, where: "Resources: GitHub repos", url: `https://github.com/${r.repo}` })),
   ...[...websiteTools, ...imageTools].map((t) => ({ id: `tool:${t.name}`, title: t.name, where: "Resources: prompt tools", url: t.url })),
+  ...builders.flatMap((b) =>
+    [b.url, b.docsUrl, b.pricingUrl].map((url, i) => ({ id: `builder:${b.id}:${i}`, title: b.name, where: "Resources: AI app builders", url })),
+  ),
+  ...vercelResources.map((r) => ({ id: `vercel:${r.title}`, title: r.title, where: "Resources: AI app builders", url: r.url })),
 ];
 
 async function check(url) {

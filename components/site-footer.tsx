@@ -18,6 +18,7 @@ const columns: { title: string; links: FooterLink[] }[] = [
   {
     title: "Resources",
     links: [
+      { label: "AI app builders", href: "/resources/ai-builders" },
       { label: "GitHub repos", href: "/resources/github" },
       { label: "Website prompts", href: "/resources/website-prompts" },
       { label: "Image prompts", href: "/resources/image-prompts" },

@@ -393,7 +393,7 @@ export const courseModules: CourseModule[] = [
       brief: "Put one thing on the public internet and build one agent that does more than chat.",
       steps: [
         "Build a one-page site about you or a small business with Claude or Google AI Studio.",
-        "Publish it for free with GitHub Pages.",
+        "Publish it for free with GitHub Pages or Vercel's Hobby plan.",
         "Build an agent in n8n's AI Agent node or Google AI Studio that uses at least one tool, like search or a spreadsheet.",
         "Give the agent a real task and read every step it takes.",
       ],
@@ -429,6 +429,16 @@ export const courseModules: CourseModule[] = [
         lastChecked: CHECKED,
       },
       {
+        id: "nextjs-learn",
+        title: "Learn Next.js",
+        publisher: "Next.js (Vercel)",
+        type: "Course",
+        url: "https://nextjs.org/learn",
+        description:
+          "The official free course: build a full-stack dashboard in 16 chapters. Useful when you want to understand the code AI builders like v0 write.",
+        lastChecked: "2026-11-24",
+      },
+      {
         id: "github-pages-site",
         title: "Creating a GitHub Pages site",
         publisher: "GitHub Docs",
@@ -436,6 +446,17 @@ export const courseModules: CourseModule[] = [
         url: "https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site",
         description: "Publish a website for free from a GitHub repository.",
         lastChecked: CHECKED,
+      },
+      {
+        id: "vercel-deploy-foundations",
+        title: "Deploy on Vercel",
+        publisher: "Vercel Academy",
+        type: "Video",
+        url: "https://vercel.com/academy/vercel-foundations",
+        duration: "1 hr",
+        description:
+          "Nine short videos on putting a site online with Vercel and managing it. The Hobby plan is free for personal projects.",
+        lastChecked: "2026-11-24",
       },
       {
         id: "google-ai-studio",
@@ -688,7 +709,7 @@ export const courseModules: CourseModule[] = [
       steps: [
         "Collect three references for the screen from Mobbin's free library.",
         "Design it in Figma or Framer, using the AI features your plan includes.",
-        "Have an AI agent build it with the Figma or Framer MCP server, or with shadcn/ui components.",
+        "Build it with an AI app builder (v0, Lovable, Bolt or Figma Make), or have an agent build it from your design with the Figma or Framer MCP server.",
         "Compare the result with your design and fix the three biggest differences.",
       ],
       doneWhen: "The page is live at a public link and matches your design on a phone and a laptop.",
@@ -701,8 +722,18 @@ export const courseModules: CourseModule[] = [
         type: "Reading",
         url: "https://help.figma.com/hc/en-us/articles/23870272542231-Get-started-with-Figma-AI",
         description:
-          "What each Figma AI tool does. The free Starter plan includes the image tools; most other AI features need a paid seat.",
+          "What each Figma AI tool does. The free Starter plan includes a small monthly allowance of AI credits; some features need a paid seat.",
         lastChecked: CHECKED,
+      },
+      {
+        id: "figma-make",
+        title: "Explore Figma Make",
+        publisher: "Figma Learn",
+        type: "Reading",
+        url: "https://help.figma.com/hc/en-us/articles/31304412302231-Explore-Figma-Make",
+        description:
+          "Prompt a clickable prototype or simple app, or start from a Figma design. Works on the free Starter plan within its AI credits.",
+        lastChecked: "2026-11-24",
       },
       {
         id: "figma-mcp-server",
@@ -733,6 +764,36 @@ export const courseModules: CourseModule[] = [
         description:
           "Connect Claude, ChatGPT or Cursor to Framer so an agent can create pages and edit content. Included in Framer's free plan.",
         lastChecked: CHECKED,
+      },
+      {
+        id: "v0-build-with-v0",
+        title: "Build with v0",
+        publisher: "Vercel Academy",
+        type: "Course",
+        url: "https://vercel.com/academy/v0-foundations",
+        description:
+          "Build, customise and ship a real website with v0, no code required. v0's free plan allows 7 messages a day.",
+        lastChecked: "2026-11-24",
+      },
+      {
+        id: "lovable-welcome",
+        title: "Welcome to Lovable",
+        publisher: "Lovable Docs",
+        type: "Reading",
+        url: "https://docs.lovable.dev/introduction/welcome",
+        description:
+          "How Lovable builds full apps with sign-in and a database from a chat. The free plan gives 5 build credits a day.",
+        lastChecked: "2026-11-24",
+      },
+      {
+        id: "bolt-help-center",
+        title: "Bolt Help Center",
+        publisher: "Bolt",
+        type: "Reading",
+        url: "https://support.bolt.new/",
+        description:
+          "Guides for building, fixing and publishing full-stack apps in Bolt. The free plan includes 1M tokens a month.",
+        lastChecked: "2026-11-24",
       },
       {
         id: "mobbin-library",

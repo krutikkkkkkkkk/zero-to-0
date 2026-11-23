@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 
 export const resourcePages = [
   { href: "/resources", label: "All resources" },
+  { href: "/resources/ai-builders", label: "AI app builders" },
   { href: "/resources/github", label: "GitHub repos" },
   { href: "/resources/website-prompts", label: "Website prompts" },
   { href: "/resources/image-prompts", label: "Image prompts" },

@@ -55,6 +55,12 @@ const extraTerms: Record<string, string> = {
   "shadcn-registry": "react components ui",
   "shadcn-mcp-server": "react components ui agent",
   "shadcn-registry-directory": "react components ui blocks",
+  "nextjs-learn": "react website coding vercel app",
+  "vercel-deploy-foundations": "hosting publish website deploy free vercel",
+  "figma-make": "prototype app builder vibe coding design no-code",
+  "v0-build-with-v0": "app builder vibe coding website vercel no-code",
+  "lovable-welcome": "app builder vibe coding database login no-code",
+  "bolt-help-center": "app builder vibe coding stackblitz full-stack",
 };
 
 const moduleTitleOf = new Map(courseModules.flatMap((m) => m.lessons.map((l) => [l.id, m.title] as const)));

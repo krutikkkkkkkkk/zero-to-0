@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { COURSE_HREF } from "@/components/ui";
 import { totalLessons } from "@/lib/course";
 import { channels } from "@/lib/content";
+import { builders } from "@/lib/builders";
 import { allRepos, imagePromptGroups, websitePromptGroups } from "@/lib/resources";
 
 export const metadata: Metadata = {
@@ -14,6 +15,12 @@ export const metadata: Metadata = {
 const count = (groups: { prompts: unknown[] }[]) => groups.reduce((n, g) => n + g.prompts.length, 0);
 
 const cards = [
+  {
+    href: "/resources/ai-builders",
+    kicker: `${builders.length} builders + Vercel`,
+    title: "AI app builders",
+    text: "v0, Lovable, Bolt and Figma Make: what each is best at, what's free, and free hosting and courses from Vercel.",
+  },
   {
     href: "/resources/github",
     kicker: `${allRepos.length} repos`,

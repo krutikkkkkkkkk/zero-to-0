@@ -11,7 +11,7 @@ A free, open-source AI course built from the best free lessons on the internet, 
 ![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)
 ![Next.js 16](https://img.shields.io/badge/Next.js-16-black)
 ![Tailwind CSS 4](https://img.shields.io/badge/Tailwind_CSS-4-38bdf8)
-![Lessons: 59](https://img.shields.io/badge/lessons-59-orange)
+![Lessons: 65](https://img.shields.io/badge/lessons-65-orange)
 
 </div>
 
@@ -27,7 +27,7 @@ Zero to ₹0 puts that free material in order. It hosts no lessons of its own: e
 
 ![The free AI course](docs/course.png)
 
-59 lessons in 9 modules, taken in order, and every module ends in a **hands-on project** with a clear "done when" check. A **5-lesson starter path** (about 8 hours) gets you using the main chat tools and building one n8n workflow.
+65 lessons in 9 modules, taken in order, and every module ends in a **hands-on project** with a clear "done when" check. A **5-lesson starter path** (about 8 hours) gets you using the main chat tools and building one n8n workflow.
 
 | # | Module | You'll be able to | Lessons |
 | - | ------ | ----------------- | :-----: |
@@ -51,7 +51,7 @@ Zero to ₹0 puts that free material in order. It hosts no lessons of its own: e
 - **Progress cards.** A shareable image of your progress. Self-reported, and clearly not a certificate.
 - **Search and filters.** Search by tool or topic ("agents", "Excel", "n8n"), or show only your path, the starter path, courses, videos, reading, tools or communities.
 - **Link previews.** Designed social preview images for the home page and the course.
-- **Resources section.** 26 hand-picked free GitHub repos by level, plus copy-paste prompt libraries for building websites and making images.
+- **Resources section.** AI app builders (v0, Lovable, Bolt, Figma Make) with their free plans and free Vercel hosting and courses, 26 hand-picked free GitHub repos by level, and copy-paste prompt libraries for building websites and making images.
 - **Share on LinkedIn and X.** Share the course or your progress; progress posts show your progress card as the preview.
 - **Weekly link check.** A GitHub Action opens every lesson link each Monday and opens an issue if any break.
 - **Honest labels.** Publisher, type and duration (only where the publisher states it) on every lesson, and any paid plan called out in the description.
@@ -111,6 +111,7 @@ lib/
   paths.ts               The "find your path" quiz and the lessons each answer picks
   search.ts              Extra search words for lessons
   resources.ts           Resources pages: repos and prompt libraries (edit this to add one)
+  builders.ts            AI app builders, Vercel resources and builder prompts
   content.ts             Copy and resources for the home page
 scripts/check-links.mjs  Opens every link and reports broken ones (npm run check-links)
 assets/fonts/            Fonts for generated images (SIL Open Font License)
