@@ -16,13 +16,18 @@ const publicSans = Public_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://zeroto.infinitylinkage.com"),
   title: "Zero to ₹0 — Learn AI. Keep your money.",
   description:
     "An independent AI course marketing parody with five learning themes, practical exercises, and 12 free public YouTube channels.",
   openGraph: {
     title: "Zero to ₹0 — Learn AI. Keep your money.",
     description: "Learn AI from free public tutorials. Keep your ₹10,000.",
+    siteName: "Zero to ₹0",
+    type: "website",
   },
+  // Large preview card on X; the image itself comes from app/opengraph-image.tsx.
+  twitter: { card: "summary_large_image", creator: "@krutikkkkkkkkk" },
   // Dark-mode extensions (Dark Reader) leave the page alone; pages handle colour themselves.
   other: { "darkreader-lock": "true" },
 };

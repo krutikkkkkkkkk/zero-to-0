@@ -24,12 +24,23 @@ export type Lesson = {
   lastChecked: string; // YYYY-MM-DD
 };
 
+/** A hands-on task that closes a module, so learners leave with proof of skill, not just watched videos. */
+export type ModuleProject = {
+  title: string;
+  /** One or two sentences: what to make and why */
+  brief: string;
+  steps: string[];
+  /** The check that tells the learner they're finished */
+  doneWhen: string;
+};
+
 export type CourseModule = {
   id: string;
   number: number;
   title: string;
   /** What the learner can do after the module */
   outcome: string;
+  project: ModuleProject;
   lessons: Lesson[];
 };
 
@@ -42,6 +53,17 @@ export const courseModules: CourseModule[] = [
     number: 1,
     title: "The six tools",
     outcome: "Use ChatGPT, Claude, Gemini, Gemini Notebook, Wispr Flow and n8n for one real task each.",
+    project: {
+      title: "One real task, six tools",
+      brief: "Pick one real task from your week, like replying to a long email thread or planning a trip, and run it through the tools in this module.",
+      steps: [
+        "Give the exact same prompt to ChatGPT, Claude and Gemini.",
+        "Upload one document to Gemini Notebook and ask it three questions about it.",
+        "Dictate your next prompt with Wispr Flow instead of typing it.",
+        "Finish the n8n Quickstart workflow and run it once.",
+      ],
+      doneWhen: "You've written two lines on which tool handled your task best, and why.",
+    },
     lessons: [
       {
         id: "openai-chatgpt-fundamentals",
@@ -138,6 +160,17 @@ export const courseModules: CourseModule[] = [
     number: 2,
     title: "How AI works",
     outcome: "Explain what a language model does and why it gets things wrong.",
+    project: {
+      title: "Catch a hallucination",
+      brief: "Test a chatbot on things you already know, so you can see where it goes wrong.",
+      steps: [
+        "Ask five questions you know the answers to: your town, your job, a niche hobby, a recent event.",
+        "Mark each answer right, partly right or invented.",
+        "Ask for sources on one wrong answer, then open them and check.",
+        "Retry that question with the source text pasted in, and tell it to say \"I don't know\" when unsure.",
+      ],
+      doneWhen: "You can explain in two or three sentences why it got the wrong one wrong.",
+    },
     lessons: [
       {
         id: "3b1b-llms-explained-briefly",
@@ -195,6 +228,17 @@ export const courseModules: CourseModule[] = [
     number: 3,
     title: "AI at work",
     outcome: "Use AI for email, research, meeting notes and data, and check its output.",
+    project: {
+      title: "Take back one hour a week",
+      brief: "Turn one repeated work task, like a status report, meeting notes or a spreadsheet summary, into a prompt you reuse.",
+      steps: [
+        "Write a prompt with four parts: who it's for, the context, the format you want, and one example.",
+        "Run it on three real pieces of work, improving the prompt after each run.",
+        "Check every fact and number against the source before you use the output.",
+        "Use only tools your employer allows for work data, and keep confidential material out of personal accounts.",
+      ],
+      doneWhen: "You have a saved prompt you'd actually use next week, and its output needs only light edits.",
+    },
     lessons: [
       {
         id: "anthropic-ai-fluency",
@@ -259,6 +303,17 @@ export const courseModules: CourseModule[] = [
     number: 4,
     title: "Automation with n8n",
     outcome: "Have one repeated task run on its own.",
+    project: {
+      title: "Automate one repeated task",
+      brief: "Build a workflow that runs without you, for example a morning email with your day's plan, or form responses saved into a Google Sheet.",
+      steps: [
+        "Start from an n8n template or a blank workflow. n8n Cloud has a free trial; the self-hosted Community Edition is free.",
+        "Add a trigger: a schedule, a form or a webhook.",
+        "Connect at least one app you use, and add an AI step if it helps.",
+        "Test it with real data, then activate it.",
+      ],
+      doneWhen: "It has run on its own at least once without you clicking anything.",
+    },
     lessons: [
       {
         id: "n8n-essentials",
@@ -333,6 +388,17 @@ export const courseModules: CourseModule[] = [
     number: 5,
     title: "Websites and AI agents",
     outcome: "Ship one website and one working agent.",
+    project: {
+      title: "Ship a page and an agent",
+      brief: "Put one thing on the public internet and build one agent that does more than chat.",
+      steps: [
+        "Build a one-page site about you or a small business with Claude or Google AI Studio.",
+        "Publish it for free with GitHub Pages.",
+        "Build an agent in n8n's AI Agent node or Google AI Studio that uses at least one tool, like search or a spreadsheet.",
+        "Give the agent a real task and read every step it takes.",
+      ],
+      doneWhen: "Your page has a public link that opens on any phone, and your agent finishes one task using a tool.",
+    },
     lessons: [
       {
         id: "anthropic-custom-webpage",
@@ -423,6 +489,17 @@ export const courseModules: CourseModule[] = [
     number: 6,
     title: "Staying current",
     outcome: "Keep up in twenty minutes a week.",
+    project: {
+      title: "A 20-minute weekly routine",
+      brief: "Replace doom-scrolling AI news with one short, fixed habit.",
+      steps: [
+        "Subscribe to The Batch and bookmark two of the news pages in this module.",
+        "Put a recurring 20-minute slot in your calendar.",
+        "Each week, write three lines: what changed, whether it affects your work, and one thing to try.",
+        "Try that one thing before the next session.",
+      ],
+      doneWhen: "You've done it two weeks in a row and tried one new feature.",
+    },
     lessons: [
       {
         id: "deeplearning-the-batch",
@@ -476,6 +553,17 @@ export const courseModules: CourseModule[] = [
     number: 7,
     title: "Getting unstuck",
     outcome: "Know where and how to ask for help.",
+    project: {
+      title: "Ask one good public question",
+      brief: "Take a real problem from modules 3 to 5 and get it solved in a community.",
+      steps: [
+        "Search the forum first, in case it's already answered.",
+        "Write the question: what you're trying to do, what you tried, the exact error, and what you expected.",
+        "Remove anything private, then post it.",
+        "When it's solved, post what fixed it so the next person finds it.",
+      ],
+      doneWhen: "Your question got an answer, or you answered someone else's.",
+    },
     lessons: [
       {
         id: "stackoverflow-how-to-ask",
@@ -529,6 +617,17 @@ export const courseModules: CourseModule[] = [
     number: 8,
     title: "Your industry",
     outcome: "Apply the tools in finance, marketing, HR or a small business.",
+    project: {
+      title: "A one-page AI playbook for your job",
+      brief: "Map where AI fits into the work you actually do.",
+      steps: [
+        "List ten tasks you do every week.",
+        "Mark each one: AI drafts it, AI summarises it, AI analyses it, or no AI.",
+        "For your top three, write and test a prompt or workflow.",
+        "Note the risks for each: private data, accuracy, and what must stay human.",
+      ],
+      doneWhen: "You have one page you could share with a colleague, with three tested uses.",
+    },
     lessons: [
       {
         id: "openai-chatgpt-finance",
@@ -583,6 +682,17 @@ export const courseModules: CourseModule[] = [
     number: 9,
     title: "Design and build with AI",
     outcome: "Design a screen with AI tools and let an agent turn it into a working page.",
+    project: {
+      title: "From screen to working page",
+      brief: "Design one screen, like a pricing page or a sign-up form, and turn it into a working page with AI.",
+      steps: [
+        "Collect three references for the screen from Mobbin's free library.",
+        "Design it in Figma or Framer, using the AI features your plan includes.",
+        "Have an AI agent build it with the Figma or Framer MCP server, or with shadcn/ui components.",
+        "Compare the result with your design and fix the three biggest differences.",
+      ],
+      doneWhen: "The page is live at a public link and matches your design on a phone and a laptop.",
+    },
     lessons: [
       {
         id: "figma-get-started-ai",
@@ -669,3 +779,10 @@ export const allLessons = courseModules.flatMap((m) => m.lessons);
 export const totalLessons = allLessons.length;
 export const allLessonIds: ReadonlySet<string> = new Set(allLessons.map((l) => l.id));
 export const starterLessons = allLessons.filter((l) => l.starter);
+
+/** Progress key for a module's project. Stored alongside lesson IDs, so it's permanent too. */
+export const projectId = (moduleId: string) => `project:${moduleId}`;
+export const allProjectIds = courseModules.map((m) => projectId(m.id));
+export const totalProjects = allProjectIds.length;
+/** Every ID that can be ticked off: lessons and module projects */
+export const allProgressIds: ReadonlySet<string> = new Set([...allLessonIds, ...allProjectIds]);

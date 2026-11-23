@@ -1,44 +1,16 @@
 "use client";
 
-import { useCallback, useMemo, useSyncExternalStore } from "react";
+import { useCallback, useMemo } from "react";
+import { useLocalValue, writeLocal } from "./local-store";
 
 /**
- * Finished lessons, stored in this browser by lesson ID (IDs are permanent, so
- * reordering or adding lessons never scrambles anyone's progress).
- * useSyncExternalStore keeps server and first client render identical (nothing done)
- * and keeps every component reading the store in sync.
+ * Finished lessons and projects, stored in this browser by permanent ID, so reordering
+ * or adding lessons never scrambles anyone's progress.
  */
 const KEY = "free-ai-course-done";
-const listeners = new Set<() => void>();
-let memory = "[]"; // used when storage is blocked (private mode, etc.)
-
-function read(): string {
-  try {
-    return localStorage.getItem(KEY) ?? memory;
-  } catch {
-    return memory;
-  }
-}
-
-function write(ids: string[]) {
-  memory = JSON.stringify(ids);
-  try {
-    localStorage.setItem(KEY, memory);
-  } catch {}
-  listeners.forEach((l) => l());
-}
-
-function subscribe(cb: () => void) {
-  listeners.add(cb);
-  window.addEventListener("storage", cb);
-  return () => {
-    listeners.delete(cb);
-    window.removeEventListener("storage", cb);
-  };
-}
 
 export function useCourseProgress(validIds: ReadonlySet<string>) {
-  const raw = useSyncExternalStore(subscribe, read, () => "[]");
+  const raw = useLocalValue(KEY) ?? "[]";
 
   const done = useMemo(() => {
     try {
@@ -54,12 +26,18 @@ export function useCourseProgress(validIds: ReadonlySet<string>) {
       const next = new Set(done);
       if (next.has(id)) next.delete(id);
       else next.add(id);
-      write([...next]);
+      writeLocal(KEY, JSON.stringify([...next]));
     },
     [done],
   );
 
-  const clear = useCallback(() => write([]), []);
+  /** Add items (e.g. from a progress link) without removing anything already done. */
+  const add = useCallback(
+    (ids: Iterable<string>) => writeLocal(KEY, JSON.stringify([...new Set([...done, ...ids])])),
+    [done],
+  );
 
-  return { done, toggle, clear };
+  const clear = useCallback(() => writeLocal(KEY, "[]"), []);
+
+  return { done, toggle, add, clear };
 }

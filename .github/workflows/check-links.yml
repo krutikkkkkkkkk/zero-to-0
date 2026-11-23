@@ -1,0 +1,62 @@
+name: Weekly link check
+
+# Opens every lesson link once a week. If any are broken it opens (or updates) a
+# "Broken lesson links" issue; when everything works again it closes that issue.
+on:
+  schedule:
+    - cron: "30 3 * * 1" # Mondays 03:30 UTC (09:00 IST)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: link-check
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+      ISSUE_TITLE: Broken lesson links
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Check links
+        id: check
+        continue-on-error: true
+        run: node scripts/check-links.mjs --report link-report.md
+
+      - name: Add report to run summary
+        if: always()
+        run: cat link-report.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Open or update issue
+        if: steps.check.outcome == 'failure'
+        run: |
+          {
+            cat link-report.md
+            echo
+            echo "_Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}_"
+          } > issue-body.md
+          number=$(gh issue list --state open --search "\"$ISSUE_TITLE\" in:title" --json number --jq '.[0].number // empty')
+          if [ -n "$number" ]; then
+            gh issue comment "$number" --body-file issue-body.md
+          else
+            gh issue create --title "$ISSUE_TITLE" --body-file issue-body.md
+          fi
+
+      - name: Close issue when all links work
+        if: steps.check.outcome == 'success'
+        run: |
+          number=$(gh issue list --state open --search "\"$ISSUE_TITLE\" in:title" --json number --jq '.[0].number // empty')
+          if [ -n "$number" ]; then
+            gh issue close "$number" --comment "Every link loaded in the latest check (${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})."
+          fi

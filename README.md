@@ -27,7 +27,7 @@ Zero to ₹0 puts that free material in order. It hosts no lessons of its own: e
 
 ![The free AI course](docs/course.png)
 
-59 lessons in 9 modules, taken in order. A **5-lesson starter path** (about 8 hours) gets you using the main chat tools and building one n8n workflow.
+59 lessons in 9 modules, taken in order, and every module ends in a **hands-on project** with a clear "done when" check. A **5-lesson starter path** (about 8 hours) gets you using the main chat tools and building one n8n workflow.
 
 | # | Module | You'll be able to | Lessons |
 | - | ------ | ----------------- | :-----: |
@@ -44,8 +44,14 @@ Zero to ₹0 puts that free material in order. It hosts no lessons of its own: e
 ### Features
 
 - **One page, whole course.** An overview of every module, with lesson counts and progress.
-- **Progress tracking without an account.** Tick lessons off; progress is saved in your browser only.
-- **Filters.** Show just the starter path, or only courses, videos, reading, tools or communities.
+- **A project in every module.** Learners finish with proof of skill, not just a list of watched videos.
+- **Find your path.** Three questions (work, goal, time per week) pick a shorter personal path with a time estimate.
+- **Progress tracking without an account.** Tick lessons and projects off; progress is saved in your browser only.
+- **Progress links.** Copy a link that carries your progress to another device. It stays in the part of the URL that's never sent to a server.
+- **Progress cards.** A shareable image of your progress. Self-reported, and clearly not a certificate.
+- **Search and filters.** Search by tool or topic ("agents", "Excel", "n8n"), or show only your path, the starter path, courses, videos, reading, tools or communities.
+- **Link previews.** Designed social preview images for the home page and the course.
+- **Weekly link check.** A GitHub Action opens every lesson link each Monday and opens an issue if any break.
 - **Honest labels.** Publisher, type and duration (only where the publisher states it) on every lesson, and any paid plan called out in the description.
 - **Phone-friendly and keyboard accessible.**
 - **Privacy-first.** No cookies, no trackers, no ads. A single public visit counter is the only data stored on the server.
@@ -89,14 +95,20 @@ app/
   zerotoinfinity/        The free AI course
   privacy/  terms/       Legal pages
   api/visits/route.ts    Visit counter endpoint
+  progress-card/         Shareable progress card image
+  opengraph-image.tsx    Social preview images (also in zerotoinfinity/)
   globals.css            Tailwind theme: colours, fonts, breakpoints
 components/
   course/                Course page and its browser-saved progress
   site-footer.tsx        Footer used on every page
   brand-logo.tsx         Publisher logos
 lib/
-  course.ts              Every course lesson (edit this to change the course)
+  course.ts              Every course lesson and module project (edit this to change the course)
+  paths.ts               The "find your path" quiz and the lessons each answer picks
+  search.ts              Extra search words for lessons
   content.ts             Copy and resources for the home page
+scripts/check-links.mjs  Opens every link and reports broken ones (npm run check-links)
+assets/fonts/            Fonts for generated images (SIL Open Font License)
 public/logos/            Logos not available in Simple Icons
 ```
 
@@ -124,6 +136,7 @@ Rules for lessons:
 2. **Link to the source.** Creator links go to the channel itself, and catalog links go to the specific course, not a search page.
 3. **Open the link before adding it**, and update `lastChecked`.
 4. If a new publisher needs a logo, add it in [`components/brand-logo.tsx`](components/brand-logo.tsx).
+5. Optionally add it to a path in [`lib/paths.ts`](lib/paths.ts) and add search words in [`lib/search.ts`](lib/search.ts).
 
 ## Contributing
 
@@ -138,6 +151,7 @@ Before opening a pull request, run:
 ```bash
 npm run lint
 npm run build
+npm run check-links   # if you added or changed a lesson link
 ```
 
 ## Privacy
@@ -154,6 +168,6 @@ Made by [Krutik Raut](https://x.com/krutikkkkkkkkk).
 
 The code and site text are released under the [MIT License](LICENSE).
 
-Every lesson belongs to its publisher and opens on their own site; this project only selects and orders them. Publisher logos come from [Simple Icons](https://simpleicons.org) (CC0) or from each publisher's own website. They are trademarks of their owners and are used only to identify who made each lesson; no endorsement is implied.
+Every lesson belongs to its publisher and opens on their own site; this project only selects and orders them. Publisher logos come from [Simple Icons](https://simpleicons.org) (CC0) or from each publisher's own website. They are trademarks of their owners and are used only to identify who made each lesson; no endorsement is implied. Generated images use [Fraunces](https://github.com/undercasetype/Fraunces) and [Public Sans](https://github.com/uswds/public-sans), both under the SIL Open Font License.
 
 Zero to ₹0 is an independent parody. It is not affiliated with Zero to Infinity with AI or its instructors, and the satire is not an allegation of misconduct.

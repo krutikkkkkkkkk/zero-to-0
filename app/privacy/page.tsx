@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <LegalPage title="Privacy" updated="23 November 2026">
+    <LegalPage title="Privacy" updated="24 November 2026">
       <p>
         Zero to ₹0 and the free AI course are run by Krutik Raut. The short version: there are no accounts, no forms, no
         cookies, no ads and no third-party analytics or tracking scripts. Here is everything the site does with data.
@@ -18,8 +18,12 @@ export default function PrivacyPage() {
       <p>These are saved on your own device and are never sent to us:</p>
       <ul>
         <li>
-          <strong>Course progress</strong>: the lessons you tick on the free AI course (stored as{" "}
+          <strong>Course progress</strong>: the lessons and projects you tick on the free AI course (stored as{" "}
           <code>free-ai-course-done</code> in your browser&apos;s local storage).
+        </li>
+        <li>
+          <strong>Your path</strong>: your three answers to &ldquo;Find your path&rdquo; (<code>zero-path</code>), used
+          only to pick which lessons to show you.
         </li>
         <li>
           <strong>Practice tasks</strong>: the tasks you mark done on the home page (<code>zero-practice</code>).
@@ -30,6 +34,18 @@ export default function PrivacyPage() {
         </li>
       </ul>
       <p>You can remove all of these at any time by clearing this site&apos;s data in your browser settings.</p>
+
+      <h2>Progress links and progress cards</h2>
+      <p>
+        <strong>Progress links</strong> carry your ticked lessons (as short codes) and your path answers in the part of
+        the link after the <code>#</code>. Browsers don&apos;t send that part to any server, so we never see it. Anyone you
+        give the link to can see which lessons you finished, so share it only with yourself or people you trust.
+      </p>
+      <p>
+        <strong>Progress cards</strong> are drawn by our server from three numbers: lessons done, projects done and the
+        last module you finished. Nothing else is sent, and the image isn&apos;t stored. It&apos;s self-reported and is
+        not a certificate.
+      </p>
 
       <h2>The visit counter</h2>
       <p>

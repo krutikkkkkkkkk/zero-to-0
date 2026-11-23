@@ -1,24 +1,35 @@
 "use client";
 
-import { useState } from "react";
-import { ArrowRight, ArrowUpRight, Check, RotateCcw } from "lucide-react";
+import { useMemo, useState } from "react";
+import { ArrowRight, ArrowUpRight, Check, RotateCcw, Search, X } from "lucide-react";
 import {
   type Lesson,
   type LessonType,
   allLessonIds,
+  allProgressIds,
+  allProjectIds,
   courseModules,
   lessonTypes,
+  projectId,
   starterLessons,
   totalLessons,
+  totalProjects,
 } from "@/lib/course";
+import { type LearningPath, type PathAnswers, buildPath, parseAnswers, serializeAnswers } from "@/lib/paths";
+import { lessonMatches, searchTerms } from "@/lib/search";
 import { BrandLogo, logoForPublisher } from "../brand-logo";
 import { Eyebrow, cx } from "../ui";
+import { useLocalValue, writeLocal } from "./local-store";
+import { PathQuiz } from "./path-quiz";
 import { useCourseProgress } from "./progress-store";
+import { ProgressImport, ProgressTools } from "./progress-tools";
+import { ProjectCard } from "./project-card";
 
-type Filter = "all" | "starter" | LessonType;
+type Filter = "all" | "path" | "starter" | LessonType;
 
 const filterLabel: Record<Filter, string> = {
   all: "All lessons",
+  path: "My path",
   starter: "Starter path",
   Course: "Courses",
   Video: "Videos",
@@ -27,24 +38,57 @@ const filterLabel: Record<Filter, string> = {
   Community: "Communities",
 };
 
-const filters: Filter[] = ["all", "starter", ...lessonTypes];
+const PATH_KEY = "zero-path";
 
-const matches = (lesson: Lesson, filter: Filter) =>
-  filter === "all" ? true : filter === "starter" ? Boolean(lesson.starter) : lesson.type === filter;
+const matchesFilter = (lesson: Lesson, filter: Filter, path: LearningPath | null) =>
+  filter === "all"
+    ? true
+    : filter === "path"
+      ? Boolean(path?.lessonIds.has(lesson.id))
+      : filter === "starter"
+        ? Boolean(lesson.starter)
+        : lesson.type === filter;
+
+const scrollToModules = () => document.getElementById("modules")?.scrollIntoView({ behavior: "smooth" });
 
 export function FreeCourse() {
-  const [filter, setFilter] = useState<Filter>("all");
-  const { done, toggle, clear } = useCourseProgress(allLessonIds);
-  const pct = Math.round((done.size / totalLessons) * 100);
-  const firstLesson = starterLessons[0];
+  const [chosenFilter, setFilter] = useState<Filter>("all");
+  const [query, setQuery] = useState("");
+  const { done, toggle, add, clear } = useCourseProgress(allProgressIds);
 
-  const showStarter = () => {
-    setFilter("starter");
-    document.getElementById("modules")?.scrollIntoView({ behavior: "smooth" });
+  const answers = parseAnswers(useLocalValue(PATH_KEY));
+  const answersKey = answers ? serializeAnswers(answers) : null;
+  const path = useMemo(() => (answersKey ? buildPath(parseAnswers(answersKey)!) : null), [answersKey]);
+  const filter: Filter = chosenFilter === "path" && !path ? "all" : chosenFilter;
+
+  const lessonsDone = [...done].filter((id) => allLessonIds.has(id)).length;
+  const projectsDone = allProjectIds.filter((id) => done.has(id)).length;
+  const pct = Math.round(((lessonsDone + projectsDone) / (totalLessons + totalProjects)) * 100);
+  const firstLesson = starterLessons[0];
+  const filters: Filter[] = ["all", ...(path ? (["path"] as const) : []), "starter", ...lessonTypes];
+
+  const terms = searchTerms(query);
+  const narrowed = filter !== "all" || terms.length > 0;
+  const shownModules = courseModules
+    .map((m) => ({ m, visible: m.lessons.filter((l) => matchesFilter(l, filter, path) && lessonMatches(l, terms)) }))
+    .filter(({ visible }) => !narrowed || visible.length > 0);
+  const matchCount = shownModules.reduce((n, s) => n + s.visible.length, 0);
+
+  const savePath = (a: PathAnswers | null) => writeLocal(PATH_KEY, a ? serializeAnswers(a) : null);
+  const showFilter = (f: Filter) => {
+    setFilter(f);
+    scrollToModules();
   };
 
   return (
     <>
+      <ProgressImport
+        onAccept={(ids, linkAnswers) => {
+          add(ids);
+          if (linkAnswers) savePath(linkAnswers);
+        }}
+      />
+
       {/* Intro */}
       <section className="wrap pt-14 pb-12 max-md:pt-10 max-md:pb-8">
         <Eyebrow>THE FREE AI COURSE</Eyebrow>
@@ -53,8 +97,8 @@ export function FreeCourse() {
         </h1>
         <p className="max-w-[620px] text-[16px] leading-[1.7] text-muted max-md:text-[15px]">
           {totalLessons} free lessons from Anthropic, OpenAI, Google, Figma, Framer, n8n, freeCodeCamp and independent creators,
-          arranged into {courseModules.length} modules. No account. Tick lessons off as you go; your progress stays in
-          this browser.
+          arranged into {courseModules.length} modules, each ending in a hands-on project. No account. Tick things off as you
+          go; your progress stays in this browser.
         </p>
         <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-4">
           <a
@@ -67,13 +111,26 @@ export function FreeCourse() {
           </a>
           <button
             type="button"
-            onClick={showStarter}
+            onClick={() => showFilter("starter")}
             className="inline-flex items-center gap-2.5 border-b border-ink pb-1 text-[13px] font-bold"
           >
             See the {starterLessons.length}-lesson starter path <ArrowRight size={16} />
           </button>
         </div>
       </section>
+
+      <PathQuiz
+        key={answersKey ?? "none"}
+        answers={answers}
+        path={path}
+        done={done}
+        onSave={savePath}
+        onRemove={() => {
+          savePath(null);
+          if (filter === "path") setFilter("all");
+        }}
+        onShowPath={() => showFilter("path")}
+      />
 
       {/* Overview */}
       <section aria-labelledby="overview-title" className="wrap pb-14">
@@ -84,6 +141,7 @@ export function FreeCourse() {
           {courseModules.map((m) => {
             const finished = m.lessons.filter((l) => done.has(l.id)).length;
             const complete = finished === m.lessons.length;
+            const projectDone = done.has(projectId(m.id));
             return (
               <li key={m.id}>
                 <a
@@ -98,7 +156,7 @@ export function FreeCourse() {
                   </span>
                   <span className="mt-3 text-[15px] font-bold leading-[1.3]">{m.title}</span>
                   <span className={cx("mt-auto pt-3 text-[12px]", complete ? "" : "text-muted")}>
-                    {finished}/{m.lessons.length} lessons done
+                    {finished}/{m.lessons.length} lessons done{projectDone && " · project done"}
                   </span>
                 </a>
               </li>
@@ -107,22 +165,25 @@ export function FreeCourse() {
         </ol>
       </section>
 
-      {/* Sticky progress + filter bar */}
+      <ProgressTools done={done} answers={answers} />
+
+      {/* Sticky progress, search and filter bar */}
       <div className="sticky top-0 z-20 border-y border-line bg-paper/95 backdrop-blur-[12px]">
-        <div className="wrap flex items-center gap-6 py-3 max-md:flex-col max-md:items-stretch max-md:gap-3">
-          <div className="flex min-w-[220px] items-center gap-3">
+        <div className="wrap flex flex-wrap items-center gap-x-6 gap-y-3 py-3">
+          <div className="flex min-w-[260px] items-center gap-3 max-md:w-full">
             <div
               className="h-2 flex-1 overflow-hidden rounded-full bg-line"
               role="progressbar"
               aria-label="Course progress"
               aria-valuemin={0}
-              aria-valuemax={totalLessons}
-              aria-valuenow={done.size}
+              aria-valuemax={100}
+              aria-valuenow={pct}
+              aria-valuetext={`${lessonsDone} of ${totalLessons} lessons and ${projectsDone} of ${totalProjects} projects done`}
             >
               <div className="h-full bg-[#938221] transition-[width] duration-300" style={{ width: `${pct}%` }} />
             </div>
-            <span className="text-[12px] font-semibold whitespace-nowrap" aria-live="polite">
-              {done.size}/{totalLessons} done
+            <span className="text-[12px] font-semibold whitespace-nowrap">
+              {lessonsDone}/{totalLessons} lessons · {projectsDone}/{totalProjects} projects
             </span>
             {done.size > 0 && (
               <button
@@ -136,8 +197,39 @@ export function FreeCourse() {
               </button>
             )}
           </div>
+
+          <div className="relative min-w-[220px] flex-1 max-md:w-full">
+            <Search size={15} className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-muted" aria-hidden />
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => {
+                setQuery(e.target.value);
+                // Results start at the top of the module list; jump there if the reader has scrolled past it.
+                const modules = document.getElementById("modules");
+                if (modules && modules.getBoundingClientRect().top < 0) modules.scrollIntoView({ block: "start" });
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Escape") setQuery("");
+              }}
+              placeholder="Search lessons: agents, Excel, n8n…"
+              aria-label="Search lessons"
+              className="h-9 w-full rounded-[8px] border border-line bg-paper pr-9 pl-9 text-[13px] placeholder:text-muted focus:border-ink focus-visible:outline-none [&::-webkit-search-cancel-button]:hidden"
+            />
+            {query && (
+              <button
+                type="button"
+                onClick={() => setQuery("")}
+                aria-label="Clear search"
+                className="absolute top-1/2 right-2 -translate-y-1/2 rounded p-1 text-muted hover:text-ink"
+              >
+                <X size={14} />
+              </button>
+            )}
+          </div>
+
           <div
-            className="ml-auto flex gap-1 max-md:-mx-5 max-md:ml-0 max-md:overflow-x-auto max-md:px-5 max-md:pb-1"
+            className="flex w-full gap-1 overflow-x-auto pb-0.5 max-md:-mx-5 max-md:w-[calc(100%+40px)] max-md:px-5"
             role="group"
             aria-label="Filter lessons"
           >
@@ -157,13 +249,33 @@ export function FreeCourse() {
             ))}
           </div>
         </div>
+        <p className="sr-only" aria-live="polite">
+          {narrowed ? `${matchCount} ${matchCount === 1 ? "lesson" : "lessons"} shown` : ""}
+        </p>
       </div>
 
       {/* Modules */}
-      <div id="modules" className="wrap scroll-mt-24">
-        {courseModules.map((m) => {
-          const visible = m.lessons.filter((l) => matches(l, filter));
+      <div id="modules" className="wrap scroll-mt-32">
+        {shownModules.length === 0 && (
+          <div className="my-14 rounded-[11px] border border-dashed border-line p-8 text-center text-[14px] text-muted">
+            No lessons match {terms.length > 0 ? <>“{query.trim()}”</> : "this filter"}
+            {filter !== "all" && terms.length > 0 && <> in {filterLabel[filter].toLowerCase()}</>}.{" "}
+            <button
+              type="button"
+              className="font-bold text-ink underline underline-offset-4"
+              onClick={() => {
+                setQuery("");
+                setFilter("all");
+              }}
+            >
+              Show all lessons
+            </button>
+          </div>
+        )}
+        {shownModules.map(({ m, visible }) => {
           const finished = m.lessons.filter((l) => done.has(l.id)).length;
+          const showProject =
+            terms.length === 0 && (filter === "all" || (filter === "path" && Boolean(path?.projectModuleIds.has(m.id))));
           return (
             <section
               key={m.id}
@@ -181,23 +293,38 @@ export function FreeCourse() {
                 <p className="mt-3 mb-0 text-[14px] leading-[1.7] text-muted">{m.outcome}</p>
                 <p className="mt-4 mb-0 text-[12px] font-semibold">
                   {finished}/{m.lessons.length} done
+                  {narrowed && visible.length < m.lessons.length && (
+                    <span className="font-normal text-muted"> · showing {visible.length}</span>
+                  )}
                 </p>
               </header>
 
               <div>
                 {visible.length === 0 ? (
                   <div className="rounded-[11px] border border-dashed border-line p-6 text-[14px] text-muted">
-                    No {filter === "starter" ? "starter lessons" : filterLabel[filter].toLowerCase()} in this module.{" "}
-                    <button type="button" className="font-bold text-ink underline underline-offset-4" onClick={() => setFilter("all")}>
-                      Show all lessons
-                    </button>
+                    No lessons in this module.
                   </div>
                 ) : (
                   <ol className="m-0 list-none border-t border-line p-0">
                     {visible.map((lesson) => (
-                      <LessonRow key={lesson.id} lesson={lesson} done={done.has(lesson.id)} onToggle={() => toggle(lesson.id)} />
+                      <LessonRow
+                        key={lesson.id}
+                        lesson={lesson}
+                        done={done.has(lesson.id)}
+                        onPath={filter !== "path" && Boolean(path?.lessonIds.has(lesson.id))}
+                        onToggle={() => toggle(lesson.id)}
+                      />
                     ))}
                   </ol>
+                )}
+                {showProject && (
+                  <ProjectCard
+                    id={projectId(m.id)}
+                    moduleNumber={m.number}
+                    project={m.project}
+                    done={done.has(projectId(m.id))}
+                    onToggle={() => toggle(projectId(m.id))}
+                  />
                 )}
               </div>
             </section>
@@ -208,7 +335,17 @@ export function FreeCourse() {
   );
 }
 
-function LessonRow({ lesson, done, onToggle }: { lesson: Lesson; done: boolean; onToggle: () => void }) {
+function LessonRow({
+  lesson,
+  done,
+  onPath,
+  onToggle,
+}: {
+  lesson: Lesson;
+  done: boolean;
+  onPath: boolean;
+  onToggle: () => void;
+}) {
   const checkboxId = `done-${lesson.id}`;
   const logo = logoForPublisher(lesson.publisher);
   return (
@@ -238,6 +375,11 @@ function LessonRow({ lesson, done, onToggle }: { lesson: Lesson; done: boolean; 
           {lesson.starter && (
             <span className="rounded-[4px] border border-[#e9d774] bg-[#fff3b0] px-1.5 py-0.5 text-[10px] font-extrabold tracking-[0.8px] text-[#1c1917]">
               STARTER
+            </span>
+          )}
+          {onPath && (
+            <span className="rounded-[4px] border border-ink px-1.5 py-0.5 text-[10px] font-extrabold tracking-[0.8px]">
+              ON YOUR PATH
             </span>
           )}
         </div>
