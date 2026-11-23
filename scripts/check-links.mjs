@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /**
- * Opens every lesson link in the course (and every YouTube channel on the home page)
+ * Opens every lesson link in the course, every YouTube channel on the home page, and
+ * every repo and tool on the Resources pages,
  * and reports the ones that are broken. Runs weekly in GitHub Actions
  * (.github/workflows/check-links.yml) and locally with `npm run check-links`.
  *
@@ -12,6 +13,7 @@
 import { writeFileSync } from "node:fs";
 import { courseModules } from "../lib/course.ts";
 import { channels, channelUrl } from "../lib/content.ts";
+import { allRepos, imageTools, websiteTools } from "../lib/resources.ts";
 
 const TIMEOUT_MS = 25_000;
 const CONCURRENCY = 6;
@@ -26,6 +28,8 @@ const links = [
     m.lessons.map((l) => ({ id: l.id, title: l.title, where: `Module ${m.number}: ${m.title}`, url: l.url })),
   ),
   ...channels.map((c) => ({ id: `home:${c.handle}`, title: c.name, where: "Home page: free channels", url: channelUrl(c) })),
+  ...allRepos.map((r) => ({ id: `repo:${r.repo}`, title: r.title, where: "Resources: GitHub repos", url: `https://github.com/${r.repo}` })),
+  ...[...websiteTools, ...imageTools].map((t) => ({ id: `tool:${t.name}`, title: t.name, where: "Resources: prompt tools", url: t.url })),
 ];
 
 async function check(url) {
@@ -41,7 +45,10 @@ async function check(url) {
       last = { status: res.status, finalUrl: res.url };
       if (res.ok || BLOCKED.has(res.status)) return last;
     } catch (err) {
-      last = { status: 0, error: err?.name === "TimeoutError" ? "timed out" : String(err?.cause?.code ?? err?.message ?? err) };
+      const code = String(err?.cause?.code ?? err?.message ?? err);
+      // The site answered, but with headers too big for Node's fetch (e.g. gemini.google.com): not broken, check by hand.
+      if (code === "UND_ERR_HEADERS_OVERFLOW") return { status: 999, error: "response too large to check automatically" };
+      last = { status: 0, error: err?.name === "TimeoutError" ? "timed out" : code };
     }
     await new Promise((r) => setTimeout(r, 3000));
   }
@@ -95,7 +102,7 @@ const table = (title, rows, fn) => {
   lines.push("", `### ${title}`, "", "| Lesson | Where | ID | Result | URL |", "| --- | --- | --- | --- | --- |", ...rows.map(fn));
 };
 table("Broken", broken, (r) => row(r, r.error ?? `HTTP ${r.status}`));
-table("Blocked automated checks", blocked, (r) => row(r, `HTTP ${r.status}`));
+table("Blocked automated checks", blocked, (r) => row(r, r.error ?? `HTTP ${r.status}`));
 table("Redirected", moved, (r) => row(r, `now ${r.moved}`));
 lines.push(
   "",

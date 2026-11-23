@@ -51,6 +51,8 @@ Zero to ₹0 puts that free material in order. It hosts no lessons of its own: e
 - **Progress cards.** A shareable image of your progress. Self-reported, and clearly not a certificate.
 - **Search and filters.** Search by tool or topic ("agents", "Excel", "n8n"), or show only your path, the starter path, courses, videos, reading, tools or communities.
 - **Link previews.** Designed social preview images for the home page and the course.
+- **Resources section.** 26 hand-picked free GitHub repos by level, plus copy-paste prompt libraries for building websites and making images.
+- **Share on LinkedIn and X.** Share the course or your progress; progress posts show your progress card as the preview.
 - **Weekly link check.** A GitHub Action opens every lesson link each Monday and opens an issue if any break.
 - **Honest labels.** Publisher, type and duration (only where the publisher states it) on every lesson, and any paid plan called out in the description.
 - **Phone-friendly and keyboard accessible.**
@@ -96,6 +98,8 @@ app/
   privacy/  terms/       Legal pages
   api/visits/route.ts    Visit counter endpoint
   progress-card/         Shareable progress card image
+  progress/[stats]/      Share pages that give LinkedIn and X posts a progress-card preview
+  resources/             GitHub repos, website prompts and image prompts
   opengraph-image.tsx    Social preview images (also in zerotoinfinity/)
   globals.css            Tailwind theme: colours, fonts, breakpoints
 components/
@@ -106,6 +110,7 @@ lib/
   course.ts              Every course lesson and module project (edit this to change the course)
   paths.ts               The "find your path" quiz and the lessons each answer picks
   search.ts              Extra search words for lessons
+  resources.ts           Resources pages: repos and prompt libraries (edit this to add one)
   content.ts             Copy and resources for the home page
 scripts/check-links.mjs  Opens every link and reports broken ones (npm run check-links)
 assets/fonts/            Fonts for generated images (SIL Open Font License)

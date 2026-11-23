@@ -10,9 +10,9 @@ import { Brand, COURSE_HREF, buttonBase, cx } from "./ui";
 const links = [
   { href: "/#why", label: "Why ₹0" },
   { href: "/#learn", label: "What you'll learn" },
-  { href: "/#resources", label: "Free resources" },
-  { href: "/#faq", label: "Questions" },
   { href: COURSE_HREF, label: "Free course" },
+  { href: "/resources", label: "Resources" },
+  { href: "/#faq", label: "Questions" },
 ];
 
 /**
@@ -63,7 +63,7 @@ export function SiteHeader({ topBar = false, sticky = true }: { topBar?: boolean
             )}
           >
             {links.map((l) => {
-              const current = l.href === pathname;
+              const current = l.href === pathname || (l.href === "/resources" && pathname.startsWith("/resources/"));
               return (
                 <Link
                   key={l.href}

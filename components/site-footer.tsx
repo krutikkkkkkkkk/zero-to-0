@@ -12,8 +12,16 @@ const columns: { title: string; links: FooterLink[] }[] = [
     links: [
       { label: "The free AI course", href: COURSE_HREF },
       { label: "Starter path", href: `${COURSE_HREF}#starter`, native: true },
-      { label: "Free resources", href: "/#resources" },
       { label: "Questions", href: "/#faq" },
+    ],
+  },
+  {
+    title: "Resources",
+    links: [
+      { label: "GitHub repos", href: "/resources/github" },
+      { label: "Website prompts", href: "/resources/website-prompts" },
+      { label: "Image prompts", href: "/resources/image-prompts" },
+      { label: "YouTube channels", href: "/#resources" },
     ],
   },
   {
@@ -59,7 +67,7 @@ function FooterAnchor({ link, className }: { link: FooterLink; className?: strin
 export function SiteFooter({ note }: { note?: string }) {
   return (
     <footer className="border-t border-line bg-paper text-ink">
-      <div className="wrap grid grid-cols-[1.6fr_repeat(4,1fr)] gap-10 py-14 max-xl:grid-cols-3 max-md:grid-cols-2 max-md:gap-8 max-md:py-10">
+      <div className="wrap grid grid-cols-[1.4fr_repeat(5,1fr)] gap-10 py-14 max-xl:grid-cols-3 max-md:grid-cols-2 max-md:gap-8 max-md:py-10">
         <div className="max-xl:col-span-3 max-md:col-span-2">
           <Brand size="text-[22px]" />
           <p className="mt-3 mb-0 max-w-[300px] text-[13px] leading-[1.7] text-muted">
