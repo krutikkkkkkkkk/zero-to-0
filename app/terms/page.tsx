@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { LegalPage } from "@/components/legal-page";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/terms" },
   title: "Terms — Zero to ₹0",
   description: "The terms for using Zero to ₹0 and the free AI course.",
 };

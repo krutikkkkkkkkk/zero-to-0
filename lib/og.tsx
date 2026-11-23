@@ -93,3 +93,65 @@ export function OgFrame({ children }: { children: ReactNode }) {
     </div>
   );
 }
+
+/** Card used for section pages (Resources): eyebrow, a headline with a marked phrase, chips, URL. */
+export function SectionCard({
+  eyebrow,
+  lead,
+  mark,
+  chips,
+  path,
+}: {
+  eyebrow: string;
+  lead: string;
+  mark: string;
+  chips: string[];
+  path: string;
+}) {
+  return (
+    <OgFrame>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <OgBrand />
+        <span style={{ fontSize: 18, fontWeight: 800, letterSpacing: 2.4 }}>{eyebrow}</span>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          marginTop: 54,
+          width: 1040,
+          fontFamily: "Fraunces",
+          fontSize: 78,
+          lineHeight: 1.05,
+          letterSpacing: -3,
+        }}
+      >
+        <span>{lead}&nbsp;</span>
+        <Marker>
+          <span style={{ fontStyle: "italic" }}>{mark}</span>
+        </Marker>
+      </div>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 14, marginTop: "auto" }}>
+        {chips.map((t) => (
+          <span
+            key={t}
+            style={{
+              display: "flex",
+              padding: "10px 18px",
+              border: `2px solid ${colors.ink}`,
+              borderRadius: 10,
+              fontSize: 22,
+              fontWeight: 700,
+            }}
+          >
+            {t}
+          </span>
+        ))}
+      </div>
+      <div style={{ display: "flex", justifyContent: "space-between", marginTop: 28, fontSize: 20, color: colors.muted }}>
+        <span>Free for beginners. No sign-up, no upsell.</span>
+        <span style={{ fontWeight: 700, color: colors.ink }}>zeroto.infinitylinkage.com{path}</span>
+      </div>
+    </OgFrame>
+  );
+}

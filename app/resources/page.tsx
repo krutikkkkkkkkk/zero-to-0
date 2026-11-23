@@ -8,6 +8,7 @@ import { builders } from "@/lib/builders";
 import { allRepos, imagePromptGroups, websitePromptGroups } from "@/lib/resources";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/resources" },
   title: "Free AI resources — Zero to ₹0",
   description: "Free GitHub repos, copy-paste website and image prompts, YouTube channels and a full AI course for beginners.",
 };

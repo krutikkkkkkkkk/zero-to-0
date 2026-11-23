@@ -5,6 +5,7 @@ import { PromptCard } from "@/components/resources/prompt-card";
 import { builderPicker, builderPromptGroups, builders, buildersCheckedOn, vercelResources } from "@/lib/builders";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/resources/ai-builders" },
   title: "AI app builders: v0, Lovable, Bolt, Figma Make — Zero to ₹0",
   description:
     "Build websites and apps by describing them. What v0, Lovable, Bolt and Figma Make do, what their free plans include, and free Vercel hosting and courses.",

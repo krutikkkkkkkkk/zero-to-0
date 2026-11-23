@@ -5,6 +5,7 @@ import { cx } from "@/components/ui";
 import { allRepos, repoGroups, resourcesCheckedOn, type RepoLevel } from "@/lib/resources";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/resources/github" },
   title: "Free AI GitHub repos for beginners — Zero to ₹0",
   description: `${allRepos.length} free GitHub repositories for learning AI: full courses, prompting guides, example apps, local AI and automation.`,
 };

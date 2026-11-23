@@ -4,6 +4,7 @@ import { PromptLibrary } from "@/components/resources/prompt-library";
 import { websitePromptGroups, websiteTools } from "@/lib/resources";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/resources/website-prompts" },
   title: "Website prompts — Zero to ₹0",
   description: "Copy-paste prompts to build, improve and publish a website with free AI tools. No coding experience needed.",
 };

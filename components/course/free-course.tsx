@@ -20,7 +20,7 @@ import { lessonMatches, searchTerms } from "@/lib/search";
 import { COURSE_URL, courseShareText } from "@/lib/share";
 import { BrandLogo, logoForPublisher } from "../brand-logo";
 import { ShareButtons } from "../share-buttons";
-import { Eyebrow, cx } from "../ui";
+import { Eyebrow, REPO_URL, cx } from "../ui";
 import { useLocalValue, writeLocal } from "./local-store";
 import { PathQuiz } from "./path-quiz";
 import { useCourseProgress } from "./progress-store";
@@ -339,6 +339,7 @@ export function FreeCourse() {
                       <LessonRow
                         key={lesson.id}
                         lesson={lesson}
+                        moduleTitle={`Module ${m.number}: ${m.title}`}
                         done={done.has(lesson.id)}
                         onPath={filter !== "path" && Boolean(path?.lessonIds.has(lesson.id))}
                         onToggle={() => toggle(lesson.id)}
@@ -364,13 +365,30 @@ export function FreeCourse() {
   );
 }
 
+/** Pre-filled GitHub issue for a lesson whose link is broken, moved or no longer free. */
+function reportUrl(lesson: Lesson, moduleTitle: string) {
+  const title = `Broken or outdated link: ${lesson.title}`;
+  const body = [
+    `**Lesson:** ${lesson.title}`,
+    `**Module:** ${moduleTitle}`,
+    `**ID:** \`${lesson.id}\``,
+    `**Link:** ${lesson.url}`,
+    "",
+    "**What's wrong?** (doesn't load / moved / now paid / out of date / something else)",
+    "",
+  ].join("\n");
+  return `${REPO_URL}/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
+}
+
 function LessonRow({
   lesson,
+  moduleTitle,
   done,
   onPath,
   onToggle,
 }: {
   lesson: Lesson;
+  moduleTitle: string;
   done: boolean;
   onPath: boolean;
   onToggle: () => void;
@@ -416,6 +434,15 @@ function LessonRow({
         <p className="mt-2 mb-0 flex items-center gap-1.5 text-[12px] text-muted">
           {logo && <BrandLogo logo={logo} size={15} />}
           <span>{[lesson.publisher, lesson.type, lesson.duration].filter(Boolean).join(" · ")}</span>
+          <span aria-hidden>·</span>
+          <a
+            href={reportUrl(lesson, moduleTitle)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline-offset-2 hover:text-ink hover:underline"
+          >
+            Report a problem<span className="sr-only"> with “{lesson.title}” (opens GitHub in a new tab)</span>
+          </a>
         </p>
       </div>
     </li>

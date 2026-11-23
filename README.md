@@ -56,7 +56,7 @@ Zero to ₹0 puts that free material in order. It hosts no lessons of its own: e
 - **Weekly link check.** A GitHub Action opens every lesson link each Monday and opens an issue if any break.
 - **Honest labels.** Publisher, type and duration (only where the publisher states it) on every lesson, and any paid plan called out in the description.
 - **Phone-friendly and keyboard accessible.**
-- **Privacy-first.** No cookies, no trackers, no ads. A single public visit counter is the only data stored on the server.
+- **Privacy-first.** No cookies, no ads, no cross-site trackers. Anonymous page-view counts (Vercel Web Analytics) and one public visit counter are the only data collected.
 
 ## Tech stack
 
@@ -162,7 +162,7 @@ npm run check-links   # if you added or changed a lesson link
 
 ## Privacy
 
-No accounts, no cookies, no ads, no third-party trackers. Course progress stays in your browser. The only server-side data is one number: the total visit count. See the full [privacy policy](https://zeroto.infinitylinkage.com/privacy).
+No accounts, no cookies, no ads, no cross-site trackers. Course progress stays in your browser. On the server there's one number (the total visit count), plus anonymous page-view totals from Vercel Web Analytics. See the full [privacy policy](https://zeroto.infinitylinkage.com/privacy).
 
 ## Support the project
 

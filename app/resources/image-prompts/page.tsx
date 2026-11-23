@@ -3,6 +3,7 @@ import { PromptLibrary } from "@/components/resources/prompt-library";
 import { imagePromptFormula, imagePromptGroups, imageTools } from "@/lib/resources";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/resources/image-prompts" },
   title: "Image prompts — Zero to ₹0",
   description: "Copy-paste prompts for product photos, social posts, thumbnails, posters and more, for free AI image tools.",
 };
@@ -15,6 +16,7 @@ export default function ImagePromptsPage() {
       intro="Product photos, social posts, thumbnails, posters and website graphics. Every prompt follows the same six-part formula, so you can write your own once you've used a few."
       tools={imageTools}
       groups={imagePromptGroups}
+      open={["chatgpt"]}
       before={
         <section aria-labelledby="formula-title" className="mt-12 rounded-[11px] border border-ink bg-[#fffef9] p-6 max-md:p-5">
           <h2 id="formula-title" className="text-[26px] tracking-[-0.8px]">

@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { ArrowUpRight } from "lucide-react";
 import type { PromptGroup } from "@/lib/resources";
-import { PromptCard } from "./prompt-card";
+import { PromptCard, type PromptTarget } from "./prompt-card";
 
 /** A prompt library page: intro, where to use the prompts, then grouped prompt cards. */
 export function PromptLibrary({
@@ -11,6 +11,7 @@ export function PromptLibrary({
   tools,
   groups,
   before,
+  open,
 }: {
   eyebrow: string;
   title: ReactNode;
@@ -18,6 +19,8 @@ export function PromptLibrary({
   tools: { name: string; url: string; note: string }[];
   groups: PromptGroup[];
   before?: ReactNode;
+  /** Which "Open in" buttons to show (image prompts only make sense in ChatGPT) */
+  open?: PromptTarget[];
 }) {
   const count = groups.reduce((n, g) => n + g.prompts.length, 0);
   return (
@@ -28,9 +31,10 @@ export function PromptLibrary({
       </h1>
       <p className="max-w-[640px] text-[16px] leading-[1.7] text-muted">{intro}</p>
       <p className="max-w-[640px] text-[14px] leading-[1.7]">
-        {count} prompts. Copy one, replace the{" "}
-        <mark className="rounded-[3px] bg-[#fff3b0] px-0.5 text-[#1c1917]">[highlighted blanks]</mark> with your own details,
-        and paste it into any of these free tools:
+        {count} prompts. Fill in the{" "}
+        <mark className="rounded-[3px] bg-[#fff3b0] px-0.5 text-[#1c1917]">[highlighted blanks]</mark> right on the card,
+        then copy it or open it straight in {open && !open.includes("claude") ? "ChatGPT" : "ChatGPT or Claude"}. Or paste
+        it into any of these free tools:
       </p>
       <ul className="mt-4 grid list-none grid-cols-4 gap-3 p-0 max-xl:grid-cols-2 max-xs:grid-cols-1">
         {tools.map((t) => (
@@ -67,7 +71,7 @@ export function PromptLibrary({
           </h2>
           <div className="mt-6 grid grid-cols-2 gap-4 max-xl:grid-cols-1">
             {g.prompts.map((p) => (
-              <PromptCard key={p.id} prompt={p} />
+              <PromptCard key={p.id} prompt={p} open={open} />
             ))}
           </div>
         </section>

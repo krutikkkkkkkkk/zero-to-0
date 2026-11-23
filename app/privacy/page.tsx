@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { LegalPage } from "@/components/legal-page";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/privacy" },
   title: "Privacy — Zero to ₹0",
   description: "What Zero to ₹0 stores, where, and why. No accounts, no cookies, no trackers.",
 };
@@ -11,7 +12,8 @@ export default function PrivacyPage() {
     <LegalPage title="Privacy" updated="24 November 2026">
       <p>
         Zero to ₹0 and the free AI course are run by Krutik Raut. The short version: there are no accounts, no forms, no
-        cookies, no ads and no third-party analytics or tracking scripts. Here is everything the site does with data.
+        tracking cookies, no ads and no cross-site trackers. We count page views anonymously to see which pages help
+        people. Here is everything the site does with data.
       </p>
 
       <h2>What stays in your browser</h2>
@@ -52,6 +54,20 @@ export default function PrivacyPage() {
         Once per browser session, the page asks our server to add one to a single running total, which is shown in the
         footer. Only that number is stored (in an Upstash Redis database). No IP address, device identifier or other
         information about you is saved with it.
+      </p>
+
+      <h2>Page-view statistics</h2>
+      <p>
+        We use{" "}
+        <a href="https://vercel.com/docs/analytics/privacy-policy" target="_blank" rel="noopener noreferrer">
+          Vercel Web Analytics
+        </a>{" "}
+        to count page views, so we can see which lessons and resources are useful and which pages people leave. For each
+        page view it records the page, the site you came from, your approximate location (country, region and city), and
+        your browser, operating system and device type. It doesn&apos;t use cookies to identify you. Instead, visits are
+        grouped using a code made from the request, which Vercel discards after 24 hours, so it can&apos;t follow you
+        from day to day or across other websites. We see only totals. Your progress links are never included, because
+        browsers don&apos;t send the part after the <code>#</code>.
       </p>
 
       <h2>Hosting</h2>
