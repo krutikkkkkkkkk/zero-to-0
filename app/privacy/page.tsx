@@ -20,15 +20,12 @@ export default function PrivacyPage() {
       <p>These are saved on your own device and are never sent to us:</p>
       <ul>
         <li>
-          <strong>Course progress</strong>: the lessons and projects you tick on the free AI course (stored as{" "}
+          <strong>Course progress</strong>: the lessons and projects you tick on the free AI course or the home page (stored as{" "}
           <code>free-ai-course-done</code> in your browser&apos;s local storage).
         </li>
         <li>
           <strong>Your path</strong>: your three answers to &ldquo;Find your path&rdquo; (<code>zero-path</code>), used
           only to pick which lessons to show you.
-        </li>
-        <li>
-          <strong>Practice tasks</strong>: the tasks you mark done on the home page (<code>zero-practice</code>).
         </li>
         <li>
           <strong>A visit marker</strong>: a note that this browser session has already been counted (

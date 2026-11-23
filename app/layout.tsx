@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://zeroto.infinitylinkage.com"),
   title: "Zero to ₹0 — Learn AI. Keep your money.",
   description:
-    "An independent AI course marketing parody with five learning themes, practical exercises, and 12 free public YouTube channels.",
+    "Learn AI for ₹0: a free course of 65 lessons from Anthropic, OpenAI, Google, n8n and more, in 9 modules with a project in each. Plus free prompts, repos and AI app builders.",
   openGraph: {
     title: "Zero to ₹0 — Learn AI. Keep your money.",
     description: "Learn AI from free public tutorials. Keep your ₹10,000.",

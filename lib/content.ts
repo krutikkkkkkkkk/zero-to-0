@@ -17,12 +17,17 @@ export type Channel = {
   logo?: LogoKey;
 };
 
-export type LearningModule = {
-  title: string;
-  description: string;
+/** Home-page copy for each course module (the modules themselves live in lib/course.ts). */
+export type ModuleHomeCopy = {
+  /** One line in the site's parody voice */
+  tagline: string;
+  /** Tools and topics covered, shown as a slash list */
   tags: string;
-  exercise: string;
+  /** Small label on the right of each row */
+  label: "START HERE" | "GET PRACTICAL" | "BUILD SOMETHING" | "KEEP GOING" | "YOUR JOB";
+  /** Honest note about costs or safety */
   note: string;
+  /** YouTube channels (see `channels`) worth watching for this module */
   handles: string[];
 };
 
@@ -44,13 +49,71 @@ export const channels: Channel[] = [
   { name: "codebasics Hindi", handle: "codebasicsHindi", category: "Hindi", level: "Beginner", initials: "cb", color: "#dce8e0", description: "Step-by-step Hindi programming foundations and technical learning.", topics: "Hindi · Python · Data analysis", search: "Python" },
 ];
 
-export const modules: LearningModule[] = [
-  { title: "Essential AI tools", description: "Same tools. Better questions. Fewer seventeen-tab identity crises.", tags: "ChatGPT / Claude / Gemini / NotebookLM", exercise: "Write three prompts for tasks you genuinely do. Test each prompt, check the output, and revise it.", note: "Use free tiers where available. Some features require paid plans.", handles: ["KevinStratvert", "JeffSu", "OpenAI", "anthropic-ai", "googleworkspace"] },
-  { title: "How AI works", description: "Confidence is not correctness. This applies to models and course sales pages.", tags: "Generative AI / Context / Verification", exercise: "Ask an assistant a factual question. Check three key claims against reliable sources and record any errors.", note: "Start with concepts before engineering-heavy courses; check prerequisites.", handles: ["freecodecamp", "OpenAI", "anthropic-ai", "MicrosoftDeveloper"] },
-  { title: "AI at work", description: "Emails, summaries, research, and spreadsheets. Bring a task, not confidential client data.", tags: "Writing / Research / Spreadsheets", exercise: "Create a repeatable routine using sample data. Write a checklist for checking the result before using it.", note: "Use synthetic data. Do not paste private work records or credentials into tools.", handles: ["JeffSu", "KevinStratvert", "googleworkspace"] },
-  { title: "Automation with n8n", description: "Automate the boring stuff. Not the consequences of a mistake.", tags: "Triggers / Actions / Human approval", exercise: "Build a small workflow that prepares an action, then waits for your approval before sending or changing anything.", note: "Hosting, APIs, and connected apps can cost money. Check costs before running a workflow.", handles: ["n8n-io", "nateherk"] },
-  { title: "Websites & AI agents", description: "An agent is not an employee just because you gave it a profile picture.", tags: "Web fundamentals / Permissions / Testing", exercise: "Build a small web project and test it. Design a narrow agent with mock inputs and explicit permissions.", note: "Advanced lessons can require code, hosting, or API fees. A paper agent design is a no-spend starting point.", handles: ["freecodecamp", "GoogleDevelopers", "MicrosoftDeveloper", "chaiaurcode"] },
-];
+export const moduleHomeCopy: Record<string, ModuleHomeCopy> = {
+  "six-tools": {
+    tagline: "Same tools. Better questions. Fewer seventeen-tab identity crises.",
+    tags: "ChatGPT / Claude / Gemini / Gemini Notebook / Wispr Flow / n8n",
+    label: "START HERE",
+    note: "Use free tiers where available. Some features require paid plans, and each lesson says so.",
+    handles: ["KevinStratvert", "JeffSu", "OpenAI", "anthropic-ai", "googleworkspace"],
+  },
+  "how-ai-works": {
+    tagline: "Confidence is not correctness. This applies to models and course sales pages.",
+    tags: "Language models / Hallucinations / Checking facts",
+    label: "GET PRACTICAL",
+    note: "Start with concepts before engineering-heavy courses; check prerequisites.",
+    handles: ["freecodecamp", "OpenAI", "anthropic-ai", "MicrosoftDeveloper"],
+  },
+  "ai-at-work": {
+    tagline: "Emails, summaries, research, and spreadsheets. Bring a task, not confidential client data.",
+    tags: "Prompting / Writing / Research / Data",
+    label: "GET PRACTICAL",
+    note: "Use sample data. Don't paste private work records or passwords into tools your employer hasn't approved.",
+    handles: ["JeffSu", "KevinStratvert", "googleworkspace"],
+  },
+  "automation-n8n": {
+    tagline: "Automate the boring stuff. Not the consequences of a mistake.",
+    tags: "Triggers / Actions / APIs / Templates",
+    label: "BUILD SOMETHING",
+    note: "Hosting, APIs and connected apps can cost money. Check costs before you switch a workflow on.",
+    handles: ["n8n-io", "nateherk"],
+  },
+  "websites-and-agents": {
+    tagline: "An agent is not an employee just because you gave it a profile picture.",
+    tags: "HTML & CSS / GitHub Pages / Vercel / Agents",
+    label: "BUILD SOMETHING",
+    note: "Publishing on GitHub Pages or Vercel's Hobby plan is free. Some agent tools need API credits.",
+    handles: ["freecodecamp", "GoogleDevelopers", "MicrosoftDeveloper", "chaiaurcode"],
+  },
+  "staying-current": {
+    tagline: "Twenty minutes a week. Not a doom-scroll with a learning label.",
+    tags: "Newsletters / Official news / A weekly routine",
+    label: "KEEP GOING",
+    note: "Every source here is free to read. Ignore anything that says you're \"falling behind\".",
+    handles: ["OpenAI", "anthropic-ai"],
+  },
+  "getting-unstuck": {
+    tagline: "Asking a good question is a skill. So is searching before you ask it.",
+    tags: "Forums / Discord / Asking well",
+    label: "KEEP GOING",
+    note: "Never post passwords, API keys or private data when asking for help.",
+    handles: ["freecodecamp"],
+  },
+  "your-industry": {
+    tagline: "Finance, marketing, HR or your own shop. Same tools, your actual job.",
+    tags: "Finance / Marketing / HR / Small business",
+    label: "YOUR JOB",
+    note: "Check your company's AI policy before using these tools with real work.",
+    handles: ["JeffSu", "googleworkspace"],
+  },
+  "design-with-ai": {
+    tagline: "From a sketch to a working page, without a paid bootcamp.",
+    tags: "Figma Make / v0 / Lovable / Bolt / shadcn/ui",
+    label: "BUILD SOMETHING",
+    note: "Each app builder has a free plan with limited credits. Plan your prompts before you spend them.",
+    handles: ["chaiaurcode"],
+  },
+};
 
 export const faqs: [question: string, answer: string][] = [
   ["Is it really free?", "This learning guide and the linked public videos have no course fee. Creators may also offer paid memberships, templates, or courses; those are optional. Software, hosting, APIs, and your internet connection can cost money."],

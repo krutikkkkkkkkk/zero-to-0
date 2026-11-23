@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { ArrowUpRight, Check } from "lucide-react";
 import { faqs } from "@/lib/content";
+import { courseModules, totalLessons } from "@/lib/course";
 import { COURSE_HREF, Eyebrow, buttonBase, buttonSize, cx, receiptDash } from "./ui";
 
 const perks = [
-  "Five learning themes, from tools to building",
-  "Public tutorials with creator credit",
-  "Practical tasks you can actually try",
-  "Browser-saved practice progress",
+  `${courseModules.length} modules and ${totalLessons} free lessons, from tools to building`,
+  "Lessons from the people who make the tools, with credit",
+  "A hands-on project at the end of every module",
+  "Progress saved in your browser, no account",
   "Honest warnings about external tool costs",
 ];
 
