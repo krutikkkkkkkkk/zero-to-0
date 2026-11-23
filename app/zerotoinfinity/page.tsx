@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { FreeCourse } from "@/components/course/free-course";
-import { Brand } from "@/components/ui";
+import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { courseModules, reviewedOn, totalLessons } from "@/lib/course";
 
@@ -16,12 +16,8 @@ export const metadata: Metadata = {
 export default function FreeCoursePage() {
   return (
     <div className="min-h-screen bg-paper text-ink">
-      <div className="border-b border-line">
-        <div className="wrap flex h-[72px] items-center justify-between">
-          <Brand />
-          <span className="text-[11px] font-semibold text-muted">The free AI course</span>
-        </div>
-      </div>
+      {/* Not sticky here: the course's own progress and filter bar sticks to the top instead. */}
+      <SiteHeader sticky={false} />
       <main id="top">
         <FreeCourse />
       </main>

@@ -24,10 +24,13 @@ export async function POST(request: Request) {
   const redis = getRedis();
   if (!redis) return Response.json({ count: null }, { status: 503 });
 
+  // Only the live site adds visits. Local dev and preview deployments read the total but never change it.
+  const isLiveSite = process.env.VERCEL_ENV === "production";
+
   let count = false;
   try {
     const body = (await request.json()) as { count?: unknown };
-    count = body.count === true;
+    count = isLiveSite && body.count === true;
   } catch {}
 
   try {

@@ -3,14 +3,15 @@ import { BrandLogo, logos } from "./brand-logo";
 import { Brand, COURSE_HREF, REPO_URL, SPONSOR_URL, TWITTER_URL, cx } from "./ui";
 import { VisitCounter } from "./visit-counter";
 
-type FooterLink = { label: string; href: string; external?: boolean };
+/** `native`: a plain <a>, so the browser fires `hashchange` (the course page listens for #starter). */
+type FooterLink = { label: string; href: string; external?: boolean; native?: boolean };
 
 const columns: { title: string; links: FooterLink[] }[] = [
   {
     title: "Learn",
     links: [
       { label: "The free AI course", href: COURSE_HREF },
-      { label: "Starter path", href: `${COURSE_HREF}#six-tools` },
+      { label: "Starter path", href: `${COURSE_HREF}#starter`, native: true },
       { label: "Free resources", href: "/#resources" },
       { label: "Questions", href: "/#faq" },
     ],
@@ -41,6 +42,10 @@ function FooterAnchor({ link, className }: { link: FooterLink; className?: strin
   const cls = cx("text-muted transition-colors hover:text-ink", className);
   return link.external ? (
     <a href={link.href} target="_blank" rel="noopener noreferrer" className={cls}>
+      {link.label}
+    </a>
+  ) : link.native ? (
+    <a href={link.href} className={cls}>
       {link.label}
     </a>
   ) : (

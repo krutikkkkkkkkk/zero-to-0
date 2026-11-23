@@ -37,6 +37,8 @@
   /* The whole site is light-only: no dark mode, and browsers must not darken it. */
   html {
     color-scheme: light;
+    /* Rotated decorations (receipt, badge) must never cause sideways scrolling. clip (not hidden) keeps sticky headers working. */
+    overflow-x: clip;
     background: var(--color-paper);
     scroll-behavior: smooth;
     scroll-padding-top: 105px;

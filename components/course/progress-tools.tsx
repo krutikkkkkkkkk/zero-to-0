@@ -5,8 +5,8 @@ import { Download, Link2, Share2, X } from "lucide-react";
 import { allLessonIds, allProgressIds, allProjectIds, courseModules } from "@/lib/course";
 import { type PathAnswers, parseAnswers, serializeAnswers } from "@/lib/paths";
 import { decodeProgress, encodeProgress } from "@/lib/progress-code";
-
-const COURSE_URL = "https://zeroto.infinitylinkage.com/zerotoinfinity";
+import { COURSE_URL, SITE_URL, progressCardPath, progressSentence, progressSlug } from "@/lib/share";
+import { ShareButtons } from "../share-buttons";
 
 /* ---------- Progress links: #progress=<codes>&path=<answers> ---------- */
 
@@ -82,6 +82,10 @@ export function ProgressTools({ done, answers }: { done: ReadonlySet<string>; an
   const lessonsDone = [...done].filter((id) => allLessonIds.has(id)).length;
   const projectsDone = allProjectIds.filter((id) => done.has(id)).length;
   const lastFinishedModule = [...courseModules].reverse().find((m) => m.lessons.every((l) => done.has(l.id)));
+  const stats = { lessons: lessonsDone, projects: projectsDone, module: lastFinishedModule?.number ?? 0 };
+  // Shared on LinkedIn / X, this page shows the progress card as the post's preview image.
+  const sharePageUrl = `${SITE_URL}/progress/${progressSlug(stats)}`;
+  const shareText = `${progressSentence(stats)} Free lessons, in order. Spent: ₹0.`;
 
   if (done.size === 0) {
     return (
@@ -105,9 +109,7 @@ export function ProgressTools({ done, answers }: { done: ReadonlySet<string>; an
   };
 
   const openCard = () => {
-    const q = new URLSearchParams({ l: String(lessonsDone), p: String(projectsDone) });
-    if (lastFinishedModule) q.set("m", String(lastFinishedModule.number));
-    setCardUrl(`/progress-card?${q}`);
+    setCardUrl(progressCardPath(stats));
     setCanShareFiles(typeof navigator.canShare === "function");
     dialogRef.current?.showModal();
   };
@@ -118,7 +120,7 @@ export function ProgressTools({ done, answers }: { done: ReadonlySet<string>; an
       const blob = await (await fetch(cardUrl)).blob();
       const file = new File([blob], "zero-to-0-progress.png", { type: "image/png" });
       if (navigator.canShare?.({ files: [file] })) {
-        await navigator.share({ files: [file], text: `Learning AI from free lessons, in order. ${COURSE_URL}` });
+        await navigator.share({ files: [file], text: `${shareText} ${COURSE_URL}` });
       } else {
         setCanShareFiles(false);
       }
@@ -170,7 +172,7 @@ export function ProgressTools({ done, answers }: { done: ReadonlySet<string>; an
             </button>
           </div>
           <p className="mt-1 mb-4 text-[13px] text-muted">
-            Share it wherever you like. It shows what you ticked off; it isn&apos;t a certificate.
+            Post it on LinkedIn or X, or download the image. It shows what you ticked off; it isn&apos;t a certificate.
           </p>
           {cardUrl && (
             // eslint-disable-next-line @next/next/no-img-element -- generated on request, no optimisation needed
@@ -182,7 +184,8 @@ export function ProgressTools({ done, answers }: { done: ReadonlySet<string>; an
               className="h-auto w-full rounded-[8px] border border-line"
             />
           )}
-          <div className="mt-5 flex flex-wrap gap-3">
+          <ShareButtons url={sharePageUrl} text={shareText} className="mt-5" />
+          <div className="mt-3 flex flex-wrap gap-3">
             {cardUrl && (
               <a
                 href={cardUrl}
@@ -198,7 +201,7 @@ export function ProgressTools({ done, answers }: { done: ReadonlySet<string>; an
                 onClick={shareCard}
                 className="inline-flex items-center gap-2 rounded-[9px] border border-ink px-4 py-2.5 text-[13px] font-bold"
               >
-                <Share2 size={16} aria-hidden /> Share
+                <Share2 size={16} aria-hidden /> Share image
               </button>
             )}
           </div>

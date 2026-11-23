@@ -9,7 +9,7 @@ import { Formula, Why } from "@/components/why-and-formula";
 export default function Home() {
   return (
     <>
-      <SiteHeader />
+      <SiteHeader topBar />
       <main id="top">
         <Hero />
         <Why />

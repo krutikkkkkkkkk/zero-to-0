@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { ArrowRight, ArrowUpRight, Check, RotateCcw, Search, X } from "lucide-react";
 import {
   type Lesson,
@@ -17,7 +17,9 @@ import {
 } from "@/lib/course";
 import { type LearningPath, type PathAnswers, buildPath, parseAnswers, serializeAnswers } from "@/lib/paths";
 import { lessonMatches, searchTerms } from "@/lib/search";
+import { COURSE_URL, courseShareText } from "@/lib/share";
 import { BrandLogo, logoForPublisher } from "../brand-logo";
+import { ShareButtons } from "../share-buttons";
 import { Eyebrow, cx } from "../ui";
 import { useLocalValue, writeLocal } from "./local-store";
 import { PathQuiz } from "./path-quiz";
@@ -49,10 +51,32 @@ const matchesFilter = (lesson: Lesson, filter: Filter, path: LearningPath | null
         ? Boolean(lesson.starter)
         : lesson.type === filter;
 
+/** "#starter" in the URL (e.g. the footer's "Starter path" link) opens the starter path filter. */
+const STARTER_HASH = "#starter";
+const subscribeHash = (cb: () => void) => {
+  window.addEventListener("hashchange", cb);
+  return () => window.removeEventListener("hashchange", cb);
+};
+
 const scrollToModules = () => document.getElementById("modules")?.scrollIntoView({ behavior: "smooth" });
 
 export function FreeCourse() {
-  const [chosenFilter, setFilter] = useState<Filter>("all");
+  const [pickedFilter, setFilter] = useState<Filter | null>(null);
+  const hash = useSyncExternalStore(
+    subscribeHash,
+    () => window.location.hash,
+    () => "",
+  );
+  const chosenFilter: Filter = pickedFilter ?? (hash === STARTER_HASH ? "starter" : "all");
+
+  // Following a #starter link while already on the page switches the filter too.
+  useEffect(() => {
+    const onHash = () => {
+      if (window.location.hash === STARTER_HASH) setFilter("starter");
+    };
+    window.addEventListener("hashchange", onHash);
+    return () => window.removeEventListener("hashchange", onHash);
+  }, []);
   const [query, setQuery] = useState("");
   const { done, toggle, add, clear } = useCourseProgress(allProgressIds);
 
@@ -116,6 +140,10 @@ export function FreeCourse() {
           >
             See the {starterLessons.length}-lesson starter path <ArrowRight size={16} />
           </button>
+        </div>
+        <div className="mt-6 flex flex-wrap items-center gap-3">
+          <span className="text-[12px] font-semibold text-muted">Know someone paying for an AI course? Share this one:</span>
+          <ShareButtons url={COURSE_URL} text={courseShareText} />
         </div>
       </section>
 
@@ -256,6 +284,7 @@ export function FreeCourse() {
 
       {/* Modules */}
       <div id="modules" className="wrap scroll-mt-32">
+        <span id="starter" className="block scroll-mt-32" aria-hidden />
         {shownModules.length === 0 && (
           <div className="my-14 rounded-[11px] border border-dashed border-line p-8 text-center text-[14px] text-muted">
             No lessons match {terms.length > 0 ? <>“{query.trim()}”</> : "this filter"}
