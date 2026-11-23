@@ -1,5 +1,6 @@
+import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Check } from "lucide-react";
-import { buttonBase, buttonSize, cx, receiptDash, textLink } from "./ui";
+import { COURSE_HREF, buttonBase, buttonSize, cx, receiptDash, textLink } from "./ui";
 
 const receiptRows: [string, string][] = [
   ["Public tutorials", "₹0"],
@@ -47,9 +48,9 @@ export function Hero() {
             another payment page.
           </p>
           <div className="mt-7 flex items-center gap-[22px] max-xl:gap-[15px] max-md:flex-wrap max-md:gap-5">
-            <a href="#learn" className={cx(buttonBase, buttonSize)}>
+            <Link href={COURSE_HREF} className={cx(buttonBase, buttonSize)}>
               Start learning · ₹0 <ArrowUpRight size={18} />
-            </a>
+            </Link>
             <a href="#resources" className={cx(textLink, "max-xl:text-[10px]")}>
               Just give me the links <ArrowRight size={16} />
             </a>

@@ -578,6 +578,91 @@ export const courseModules: CourseModule[] = [
       },
     ],
   },
+  {
+    id: "design-with-ai",
+    number: 9,
+    title: "Design and build with AI",
+    outcome: "Design a screen with AI tools and let an agent turn it into a working page.",
+    lessons: [
+      {
+        id: "figma-get-started-ai",
+        title: "Get started with Figma AI",
+        publisher: "Figma Learn",
+        type: "Reading",
+        url: "https://help.figma.com/hc/en-us/articles/23870272542231-Get-started-with-Figma-AI",
+        description:
+          "What each Figma AI tool does. The free Starter plan includes the image tools; most other AI features need a paid seat.",
+        lastChecked: CHECKED,
+      },
+      {
+        id: "figma-mcp-server",
+        title: "Guide to the Figma MCP server",
+        publisher: "Figma Learn",
+        type: "Reading",
+        url: "https://help.figma.com/hc/en-us/articles/32132100833559-Guide-to-the-Figma-MCP-server",
+        description:
+          "Let Claude, Cursor and other agents read your Figma designs and build from them. Available on all plans, including free.",
+        lastChecked: CHECKED,
+      },
+      {
+        id: "framer-academy",
+        title: "Framer Academy",
+        publisher: "Framer",
+        type: "Course",
+        url: "https://www.framer.com/academy/",
+        description: "Short video lessons on designing, building and publishing a site with Framer's AI agent.",
+        lastChecked: CHECKED,
+      },
+      {
+        id: "framer-mcp",
+        title: "Getting started with Framer MCP",
+        publisher: "Framer Help",
+        type: "Reading",
+        url: "https://www.framer.com/help/articles/getting-started-with-framer-mcp/",
+        duration: "4 min video",
+        description:
+          "Connect Claude, ChatGPT or Cursor to Framer so an agent can create pages and edit content. Included in Framer's free plan.",
+        lastChecked: CHECKED,
+      },
+      {
+        id: "mobbin-library",
+        title: "Mobbin",
+        publisher: "Mobbin",
+        type: "Tool",
+        url: "https://mobbin.com/",
+        description:
+          "600,000+ real app screens to study before you design. Browsing is free with an account; the Mobbin MCP for agents needs a Pro or Team plan.",
+        lastChecked: CHECKED,
+      },
+      {
+        id: "shadcn-registry",
+        title: "shadcn/ui registry",
+        publisher: "shadcn/ui",
+        type: "Reading",
+        url: "https://ui.shadcn.com/docs/registry",
+        description: "Run your own registry of components that anyone, or any AI agent, can install with one command. Open source.",
+        lastChecked: CHECKED,
+      },
+      {
+        id: "shadcn-mcp-server",
+        title: "shadcn MCP server",
+        publisher: "shadcn/ui",
+        type: "Reading",
+        url: "https://ui.shadcn.com/docs/mcp",
+        description: "Let your AI agent browse, search and install components from shadcn registries when you ask in plain English.",
+        lastChecked: CHECKED,
+      },
+      {
+        id: "shadcn-registry-directory",
+        title: "Registry directory",
+        publisher: "shadcn/ui",
+        type: "Tool",
+        url: "https://ui.shadcn.com/docs/directory",
+        description: "Community registries of free components and page blocks you can add to a project.",
+        lastChecked: CHECKED,
+      },
+    ],
+  },
 ];
 
 export const allLessons = courseModules.flatMap((m) => m.lessons);

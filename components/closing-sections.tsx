@@ -1,6 +1,7 @@
+import Link from "next/link";
 import { ArrowUpRight, Check } from "lucide-react";
 import { faqs } from "@/lib/content";
-import { Brand, Eyebrow, buttonBase, buttonSize, cx, receiptDash } from "./ui";
+import { Brand, COURSE_HREF, Eyebrow, buttonBase, buttonSize, cx, receiptDash } from "./ui";
 
 const perks = [
   "Five learning themes, from tools to building",
@@ -52,9 +53,9 @@ export function Money() {
           <br />
           We checked the maths twice.
         </p>
-        <a className={cx(buttonBase, buttonSize, "w-full")} href="#learn">
+        <Link className={cx(buttonBase, buttonSize, "w-full")} href={COURSE_HREF}>
           Start learning free <ArrowUpRight size={18} />
-        </a>
+        </Link>
         <div className={receiptDash} />
         {priceLines.map(([label, value, bold]) => (
           <div key={label} className={cx("my-[11px] flex justify-between gap-3 text-[9px]", bold && "font-extrabold")}>
@@ -140,9 +141,9 @@ export function Closing() {
       <p className="mt-5 mb-[26px] text-[14px] text-muted max-md:text-[12px]">
         Stop collecting promises. Start completing projects.
       </p>
-      <a className={cx(buttonBase, buttonSize)} href="#learn">
+      <Link className={cx(buttonBase, buttonSize)} href={COURSE_HREF}>
         Learn AI. Keep your money. <ArrowUpRight size={18} />
-      </a>
+      </Link>
       <small className="mt-[15px] block text-[9px] text-muted">No course fee. Effort, tragically, still required.</small>
     </section>
   );

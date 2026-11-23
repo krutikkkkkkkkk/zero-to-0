@@ -1,14 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { ArrowUpRight, Menu, X } from "lucide-react";
-import { Brand, buttonBase, cx } from "./ui";
+import { Brand, COURSE_HREF, buttonBase, cx } from "./ui";
 
 const links = [
   { href: "#why", label: "Why ₹0" },
   { href: "#learn", label: "What you'll learn" },
   { href: "#resources", label: "Free resources" },
   { href: "#faq", label: "Questions" },
+  { href: COURSE_HREF, label: "Free course" },
 ];
 
 export function SiteHeader() {
@@ -34,20 +36,20 @@ export function SiteHeader() {
             )}
           >
             {links.map((l) => (
-              <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="hover:border-b">
+              <Link key={l.href} href={l.href} onClick={() => setOpen(false)} className="hover:border-b">
                 {l.label}
-              </a>
+              </Link>
             ))}
           </nav>
-          <a
-            href="#learn"
+          <Link
+            href={COURSE_HREF}
             className={cx(
               buttonBase,
               "gap-4 px-[18px] py-[11px] text-[11px] max-md:ml-auto max-md:gap-[7px] max-md:px-3 max-md:py-2.5 max-md:text-[10px]",
             )}
           >
             Start · ₹0 <ArrowUpRight size={16} />
-          </a>
+          </Link>
           <button
             type="button"
             className="hidden border-0 bg-transparent max-md:flex max-md:p-[2px]"

@@ -53,7 +53,7 @@ export function FreeCourse() {
           Everything a paid AI course teaches. <em className="relative z-[1] inline-block before:absolute before:inset-[8px_-6px_2px_-4px] before:-z-[1] before:-rotate-1 before:bg-marker dark:text-[#1c1917]">Free, and in order.</em>
         </h1>
         <p className="max-w-[620px] text-[16px] leading-[1.7] text-muted max-md:text-[15px]">
-          {totalLessons} free lessons from Anthropic, OpenAI, Google, n8n, freeCodeCamp and independent creators,
+          {totalLessons} free lessons from Anthropic, OpenAI, Google, Figma, Framer, n8n, freeCodeCamp and independent creators,
           arranged into {courseModules.length} modules. No account. Tick lessons off as you go; your progress stays in
           this browser.
         </p>
@@ -81,7 +81,7 @@ export function FreeCourse() {
         <h2 id="overview-title" className="sr-only">
           Course overview
         </h2>
-        <ol className="grid list-none grid-cols-4 gap-3 p-0 max-xl:grid-cols-2 max-xs:grid-cols-1">
+        <ol className="grid list-none grid-cols-3 gap-3 p-0 max-xl:grid-cols-2 max-xs:grid-cols-1">
           {courseModules.map((m) => {
             const finished = m.lessons.filter((l) => done.has(l.id)).length;
             const complete = finished === m.lessons.length;

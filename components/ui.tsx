@@ -1,4 +1,8 @@
+import Link from "next/link";
 import type { ReactNode } from "react";
+
+/** The free AI course page */
+export const COURSE_HREF = "/zerotoinfinity";
 
 /** Join class names, skipping falsy values. */
 export const cx = (...parts: (string | false | null | undefined)[]) => parts.filter(Boolean).join(" ");
@@ -30,11 +34,11 @@ export const receiptDash = "my-[21px] border-t border-dashed border-[#b9b0a5]";
 
 export function Brand({ size = "text-[24px] max-md:text-[22px]" }: { size?: string }) {
   return (
-    <a className={cx("flex items-baseline gap-[5px] whitespace-nowrap font-serif tracking-[-1px]", size)} href="#top">
+    <Link className={cx("flex items-baseline gap-[5px] whitespace-nowrap font-serif tracking-[-1px]", size)} href="/">
       Zero to <span className="inline-block -rotate-5 bg-marker px-1 leading-[1.2] text-[#1c1917]">₹0</span>
       <i className="ml-[3px] font-sans text-[9px] font-normal not-italic leading-[normal] tracking-normal max-xs:hidden">
         with AI
       </i>
-    </a>
+    </Link>
   );
 }
