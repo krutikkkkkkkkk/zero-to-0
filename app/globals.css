@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* Fonts come from next/font variables set on <html> in layout.tsx */
+  --font-sans: var(--font-public-sans), sans-serif;
+  --font-serif: var(--font-fraunces), Georgia, serif;
+}
+
+@theme {
+  --color-paper: #fffaf0;
+  --color-ink: #1c1917;
+  --color-muted: #716a60;
+  --color-marker: #fde047;
+  --color-line: #e8e0d2;
+
+  /* Desktop-first breakpoints that mirror the original stylesheet:
+     max-xl = ≤1050px, max-md = ≤760px, max-xs = ≤390px, lg = ≥1000px, md = ≥761px */
+  --breakpoint-*: initial;
+  --breakpoint-xs: 391px;
+  --breakpoint-md: 761px;
+  --breakpoint-lg: 1000px;
+  --breakpoint-xl: 1051px;
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 105px;
+  }
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  button,
+  input {
+    -webkit-tap-highlight-color: transparent;
+  }
+  button {
+    cursor: pointer;
+  }
+  a:focus-visible,
+  button:focus-visible,
+  summary:focus-visible,
+  input:focus-visible {
+    outline: 3px solid #a46714;
+    outline-offset: 5px;
+  }
+  h1,
+  h2 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    letter-spacing: -1.8px;
+    line-height: 1.12;
+  }
+  h2 {
+    font-size: 43px;
+  }
+  h3 {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+    line-height: 1.3;
+  }
+  p {
+    margin: 18px 0;
+  }
+  em {
+    font-weight: 500;
+  }
+  small {
+    font-size: 11px;
+    line-height: 1.6;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    ::before,
+    ::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+}
+
+/* Layout container: 1120px max, 40px gutters (20px on phones) */
+@utility wrap {
+  max-width: 1120px;
+  margin-inline: auto;
+  width: calc(100% - 80px);
+  @media (width < 761px) {
+    width: calc(100% - 40px);
+  }
+}
+
+/* Standard vertical section rhythm */
+@utility section-y {
+  padding-block: 94px;
+  @media (width < 761px) {
+    padding-block: 60px;
+  }
+}
+
+/* Torn-paper bottom edge for the receipt */
+@utility zigzag {
+  background:
+    linear-gradient(135deg, #fffef9 25%, transparent 25%) -5px 0 / 10px 10px,
+    linear-gradient(225deg, #fffef9 25%, transparent 25%) -5px 0 / 10px 10px;
+}
+
+@utility barcode {
+  background: repeating-linear-gradient(
+    90deg,
+    #1c1917 0px,
+    #1c1917 2px,
+    transparent 2px,
+    transparent 5px,
+    #1c1917 5px,
+    #1c1917 6px,
+    transparent 6px,
+    transparent 9px
+  );
+}
