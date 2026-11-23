@@ -1,4 +1,4 @@
-import type { Metadata, Viewport } from "next";
+import type { Metadata } from "next";
 import { FreeCourse } from "@/components/course/free-course";
 import { Brand } from "@/components/ui";
 import { SiteFooter } from "@/components/site-footer";
@@ -13,15 +13,9 @@ export const metadata: Metadata = {
   },
 };
 
-// This page has a real dark mode (see `.theme-auto` in globals.css), so tell the browser.
-export const viewport: Viewport = {
-  colorScheme: "light dark",
-};
-
 export default function FreeCoursePage() {
   return (
-    // `theme-auto` switches the colour tokens to dark when the device asks for it (see globals.css)
-    <div className="theme-auto min-h-screen bg-paper text-ink">
+    <div className="min-h-screen bg-paper text-ink">
       <div className="border-b border-line">
         <div className="wrap flex h-[72px] items-center justify-between">
           <Brand />

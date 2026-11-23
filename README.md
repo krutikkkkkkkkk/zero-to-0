@@ -47,7 +47,7 @@ Zero to ₹0 puts that free material in order. It hosts no lessons of its own: e
 - **Progress tracking without an account.** Tick lessons off; progress is saved in your browser only.
 - **Filters.** Show just the starter path, or only courses, videos, reading, tools or communities.
 - **Honest labels.** Publisher, type and duration (only where the publisher states it) on every lesson, and any paid plan called out in the description.
-- **Light and dark mode, phone-friendly, keyboard accessible.**
+- **Phone-friendly and keyboard accessible.**
 - **Privacy-first.** No cookies, no trackers, no ads. A single public visit counter is the only data stored on the server.
 
 ## Tech stack

@@ -27,9 +27,8 @@ export const metadata: Metadata = {
   other: { "darkreader-lock": "true" },
 };
 
-// The home and legal pages are designed light-only. "only light" stops browsers
-// (e.g. Chrome's Auto Dark Mode) from force-darkening them. The course page overrides
-// this because it has its own dark mode.
+// Every page is light-only. "only light" stops browsers (e.g. Chrome's Auto Dark Mode)
+// from force-darkening them. Pages must not override this.
 export const viewport: Viewport = {
   colorScheme: "only light",
 };

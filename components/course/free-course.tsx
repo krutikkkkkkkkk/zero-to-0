@@ -49,7 +49,7 @@ export function FreeCourse() {
       <section className="wrap pt-14 pb-12 max-md:pt-10 max-md:pb-8">
         <Eyebrow>THE FREE AI COURSE</Eyebrow>
         <h1 className="max-w-[820px] text-[64px] leading-[1.04] tracking-[-2.5px] max-md:text-[40px] max-md:tracking-[-1.4px]">
-          Everything a paid AI course teaches. <em className="relative z-[1] inline-block before:absolute before:inset-[8px_-6px_2px_-4px] before:-z-[1] before:-rotate-1 before:bg-marker dark:text-[#1c1917]">Free, and in order.</em>
+          Everything a paid AI course teaches. <em className="relative z-[1] inline-block before:absolute before:inset-[8px_-6px_2px_-4px] before:-z-[1] before:-rotate-1 before:bg-marker">Free, and in order.</em>
         </h1>
         <p className="max-w-[620px] text-[16px] leading-[1.7] text-muted max-md:text-[15px]">
           {totalLessons} free lessons from Anthropic, OpenAI, Google, Figma, Framer, n8n, freeCodeCamp and independent creators,

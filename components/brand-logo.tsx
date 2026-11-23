@@ -81,7 +81,7 @@ export function logoForPublisher(publisher: string): Logo | undefined {
   return undefined;
 }
 
-/** Near-black brand colours would vanish in dark mode, so those follow the text colour. */
+/** Near-black brand colours follow the text colour. */
 function isNearBlack(hex: string) {
   const n = parseInt(hex, 16);
   const [r, g, b] = [(n >> 16) & 255, (n >> 8) & 255, n & 255];

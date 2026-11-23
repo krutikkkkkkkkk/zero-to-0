@@ -34,7 +34,10 @@
 }
 
 @layer base {
+  /* The whole site is light-only: no dark mode, and browsers must not darken it. */
   html {
+    color-scheme: light;
+    background: var(--color-paper);
     scroll-behavior: smooth;
     scroll-padding-top: 105px;
   }
@@ -103,20 +106,6 @@
       animation: none !important;
       transition: none !important;
     }
-  }
-}
-
-/* Pages wrapped in .theme-auto (the free course) follow the device's dark mode by
-   swapping the colour tokens; the home page keeps its light-only design. */
-/* Browsers are told which pages may go dark via <meta name="color-scheme"> (see the
-   `viewport` exports in app/layout.tsx and app/zerotoinfinity/page.tsx). */
-@media (prefers-color-scheme: dark) {
-  :root:has(.theme-auto) {
-    color-scheme: dark;
-    --color-paper: #16140f;
-    --color-ink: #f3eee4;
-    --color-muted: #a8a094;
-    --color-line: #332e26;
   }
 }
 
